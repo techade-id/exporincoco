@@ -74,7 +74,7 @@ export default async function HomePage({
             </Link>
             <Link
               href={localizedPath(locale, "/contact")}
-              className="rounded-md border border-white px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-charcoal"
+              className="rounded-md border border-white px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-neutral-900"
             >
               {copy.hero.contactUs}
             </Link>
@@ -90,7 +90,7 @@ export default async function HomePage({
               <div key={value.title} className="flex gap-3">
                 <Icon className="mt-0.5 h-8 w-8 shrink-0 text-orange" />
                 <div>
-                  <h3 className="font-semibold text-charcoal">{value.title}</h3>
+                  <h3 className="font-semibold text-ink">{value.title}</h3>
                   <p className="mt-1 text-sm text-muted">{value.text}</p>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default async function HomePage({
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div>
           <p className="section-kicker text-xs font-semibold uppercase text-orange">{copy.about.kicker}</p>
-          <h2 className="mt-2 text-3xl font-semibold text-charcoal">{copy.about.title}</h2>
+          <h2 className="mt-2 text-3xl font-semibold text-ink">{copy.about.title}</h2>
           <p className="mt-4 text-muted">{copy.about.p1}</p>
           <p className="mt-3 text-muted">{copy.about.p2}</p>
           <Link
@@ -123,7 +123,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="bg-white px-4 py-8 sm:px-6">
+      <section className="bg-background px-4 py-8 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-semibold text-orange">{copy.products.title}</h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -140,7 +140,7 @@ export default async function HomePage({
                   className="object-cover transition duration-500 group-hover:scale-105"
                   sizes="(max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-white/90 px-4 py-3 text-sm font-semibold text-charcoal">
+                <div className="absolute inset-x-0 bottom-0 bg-card/90 px-4 py-3 text-sm font-semibold text-ink">
                   {product[locale].name}
                 </div>
               </Link>
@@ -153,7 +153,7 @@ export default async function HomePage({
         <p className="section-kicker text-center text-xs font-semibold uppercase text-orange">
           {copy.portfolio.kicker}
         </p>
-        <h2 className="mt-2 text-center text-3xl font-semibold text-charcoal">{copy.portfolio.title}</h2>
+        <h2 className="mt-2 text-center text-3xl font-semibold text-ink">{copy.portfolio.title}</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {copy.portfolio.items.map((item, index) => (
             <article key={item.title} className="overflow-hidden rounded-xl bg-surface">
@@ -179,10 +179,10 @@ export default async function HomePage({
 
       <section className="bg-surface px-4 py-14 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-3xl font-semibold text-charcoal">{copy.markets.title}</h2>
+          <h2 className="text-center text-3xl font-semibold text-ink">{copy.markets.title}</h2>
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
             {markets.map((market) => (
-              <div key={market.code} className="rounded-xl bg-white px-3 py-5 text-center shadow-sm">
+              <div key={market.code} className="rounded-xl bg-card px-3 py-5 text-center shadow-sm">
                 <div className="text-3xl">{market.flag}</div>
                 <p className="mt-2 text-sm font-medium">{locale === "id" ? market.nameId : market.name}</p>
               </div>
@@ -214,7 +214,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="bg-white px-4 pb-8 sm:px-6">
+      <section className="bg-background px-4 pb-8 sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-semibold text-orange">{copy.blog.title}</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-2">

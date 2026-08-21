@@ -15,7 +15,7 @@ export function Footer({ locale }: { locale: Locale }) {
   const mapsSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapsQuery)}&output=embed`;
 
   return (
-    <footer className="bg-charcoal text-white">
+    <footer className="bg-band text-white">
       <div
         className={`mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 ${
           hideInquiry ? "lg:grid-cols-2" : "lg:grid-cols-[1fr_1.1fr_1fr]"

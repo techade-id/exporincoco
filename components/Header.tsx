@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { IconClose, IconGlobe, IconMenu } from "@/components/icons";
 import { t } from "@/lib/i18n";
 import { localizedPath, type Locale } from "@/lib/site";
@@ -32,7 +33,7 @@ export function Header({ locale }: { locale: Locale }) {
   const nextLocale: Locale = locale === "en" ? "id" : "en";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6">
         <Logo locale={locale} />
         <nav className="hidden items-center gap-8 md:flex">
@@ -47,7 +48,7 @@ export function Header({ locale }: { locale: Locale }) {
                 key={link.key}
                 href={href}
                 className={`text-sm font-medium transition-colors ${
-                  active ? "text-orange" : "text-charcoal hover:text-orange"
+                  active ? "text-orange" : "text-ink hover:text-orange"
                 }`}
               >
                 {copy.nav[link.key]}
@@ -58,14 +59,15 @@ export function Header({ locale }: { locale: Locale }) {
         <div className="flex items-center gap-3">
           <Link
             href={switchLocale(pathname, nextLocale)}
-            className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-sm text-charcoal hover:border-orange hover:text-orange"
+            className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-sm text-ink hover:border-orange hover:text-orange"
           >
             <IconGlobe className="h-4 w-4" />
             <span>{copy.language}</span>
           </Link>
+          <ThemeToggle locale={locale} />
           <button
             type="button"
-            className="md:hidden"
+            className="text-ink md:hidden"
             aria-label="Menu"
             onClick={() => setOpen((value) => !value)}
           >
@@ -74,13 +76,13 @@ export function Header({ locale }: { locale: Locale }) {
         </div>
       </div>
       {open ? (
-        <nav className="border-t border-line bg-white px-4 py-4 md:hidden">
+        <nav className="border-t border-line bg-background px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
             {links.map((link) => (
               <Link
                 key={link.key}
                 href={localizedPath(locale, link.href)}
-                className="text-base font-medium text-charcoal"
+                className="text-base font-medium text-ink"
                 onClick={() => setOpen(false)}
               >
                 {copy.nav[link.key]}

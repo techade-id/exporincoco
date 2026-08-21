@@ -34,7 +34,7 @@ export default async function ProductsPage({
 
   return (
     <>
-      <section className="bg-charcoal px-4 py-16 text-white sm:px-6">
+      <section className="bg-band px-4 py-16 text-white sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-4xl font-bold">{copy.products.title}</h1>
           <p className="mt-3 max-w-2xl text-white/70">{copy.about.p2}</p>

@@ -39,7 +39,7 @@ export default async function PortfolioPage({
 
   return (
     <>
-      <section className="bg-charcoal px-4 py-16 text-white sm:px-6">
+      <section className="bg-band px-4 py-16 text-white sm:px-6">
         <div className="mx-auto max-w-6xl">
           <p className="section-kicker text-xs font-semibold uppercase text-orange">{copy.portfolio.kicker}</p>
           <h1 className="mt-2 text-4xl font-bold">{copy.portfolio.title}</h1>

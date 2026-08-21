@@ -32,7 +32,7 @@ export default async function AboutPage({
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-charcoal">
+      <section className="relative isolate overflow-hidden bg-band">
         <Image
           src="/images/about-hero.jpg"
           alt="Burning charcoal"
@@ -70,17 +70,17 @@ export default async function AboutPage({
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-3xl font-semibold">{copy.mission.title}</h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <article className="rounded-2xl bg-white p-7">
+            <article className="rounded-2xl bg-card p-7">
               <IconEye className="h-8 w-8 text-orange" />
               <h3 className="mt-4 text-xl font-semibold">{copy.mission.visionTitle}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{copy.mission.vision}</p>
             </article>
-            <article className="rounded-2xl bg-white p-7">
+            <article className="rounded-2xl bg-card p-7">
               <IconTarget className="h-8 w-8 text-orange" />
               <h3 className="mt-4 text-xl font-semibold">{copy.mission.missionTitle}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{copy.mission.mission}</p>
             </article>
-            <article className="rounded-2xl bg-white p-7">
+            <article className="rounded-2xl bg-card p-7">
               <h3 className="text-xl font-semibold">{copy.mission.valuesTitle}</h3>
               <ul className="mt-5 space-y-4">
                 {copy.mission.values.map((value, index) => {

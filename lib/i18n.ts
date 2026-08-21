@@ -11,6 +11,7 @@ export const dictionary = {
       contact: "Contact",
     },
     language: "English",
+    theme: { light: "Switch to light mode", dark: "Switch to dark mode" },
     hero: {
       title:
         "Trusted Indonesian Exporter of Coconut Charcoal Briquettes & Coconut-Based Products",
@@ -160,6 +161,7 @@ export const dictionary = {
       contact: "Kontak",
     },
     language: "Indonesia",
+    theme: { light: "Ganti ke mode terang", dark: "Ganti ke mode gelap" },
     hero: {
       title:
         "Eksportir Indonesia Terpercaya untuk Briket Arang Kelapa & Produk Berbasis Kelapa",

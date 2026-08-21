@@ -1,14 +1,31 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #1c1c1c;
   --orange: #f26522;
   --orange-dark: #d35412;
   --charcoal: #1c1c1c;
+  --ink: #1c1c1c;
+  --card: #ffffff;
+  --band: #1c1c1c;
   --muted: #6b6b6b;
   --surface: #f4f4f4;
   --line: #e8e8e8;
+}
+
+.dark {
+  --background: #111111;
+  --foreground: #f3f3f3;
+  --ink: #f3f3f3;
+  --card: #1c1c1c;
+  --band: #0a0a0a;
+  --muted: #a3a3a3;
+  --surface: #191919;
+  --line: #2e2e2e;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -17,6 +34,9 @@
   --color-orange: var(--orange);
   --color-orange-dark: var(--orange-dark);
   --color-charcoal: var(--charcoal);
+  --color-ink: var(--ink);
+  --color-card: var(--card);
+  --color-band: var(--band);
   --color-muted: var(--muted);
   --color-surface: var(--surface);
   --color-line: var(--line);

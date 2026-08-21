@@ -44,7 +44,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <section className="bg-charcoal px-4 py-20 text-center text-white sm:px-6">
+      <section className="bg-band px-4 py-20 text-center text-white sm:px-6">
         <h1 className="text-4xl font-bold sm:text-5xl">{product[locale].name}</h1>
         <p className="mx-auto mt-4 max-w-2xl text-white/70">{product[locale].short}</p>
       </section>
@@ -61,7 +61,7 @@ export default async function ProductPage({
               priority
             />
           </div>
-          <p className="mt-3 rounded-md bg-charcoal px-4 py-2 text-center text-sm font-medium text-white">
+          <p className="mt-3 rounded-md bg-band px-4 py-2 text-center text-sm font-medium text-white">
             {product[locale].name}
           </p>
         </div>

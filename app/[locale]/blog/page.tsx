@@ -31,7 +31,7 @@ export default async function BlogPage({
 
   return (
     <>
-      <section className="bg-charcoal px-4 py-16 text-white sm:px-6">
+      <section className="bg-band px-4 py-16 text-white sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-4xl font-bold">{copy.blog.title}</h1>
         </div>

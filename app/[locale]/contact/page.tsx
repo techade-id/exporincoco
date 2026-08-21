@@ -31,7 +31,7 @@ export default async function ContactPage({
 
   return (
     <>
-      <section className="bg-charcoal px-4 py-16 text-white sm:px-6">
+      <section className="bg-band px-4 py-16 text-white sm:px-6">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-4xl font-bold">{copy.contact.title}</h1>
           <p className="mt-3 max-w-2xl text-white/70">{copy.contact.lead}</p>
@@ -80,7 +80,7 @@ export default async function ContactPage({
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-        <div className="rounded-2xl bg-charcoal p-6 sm:p-8">
+        <div className="rounded-2xl bg-band p-6 sm:p-8">
           <h2 className="mb-5 text-xl font-semibold text-white">{copy.contact.formTitle}</h2>
           <InquiryForm locale={locale} />
         </div>

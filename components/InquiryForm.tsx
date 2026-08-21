@@ -76,7 +76,7 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
   }
 
   const fieldClass =
-    "w-full rounded-md border border-white/15 bg-white px-3 py-2.5 text-sm text-charcoal outline-none placeholder:text-muted focus:border-orange";
+    "w-full rounded-md border border-white/15 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none placeholder:text-neutral-500 focus:border-orange";
 
   return (
     <form onSubmit={onSubmit} className="space-y-3">
