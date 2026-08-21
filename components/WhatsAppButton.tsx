@@ -10,9 +10,9 @@ export function WhatsAppButton({ locale }: { locale: Locale }) {
       target="_blank"
       rel="noreferrer"
       aria-label={copy.wa.label}
-      className="no-print fixed right-4 bottom-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+      className="no-print fixed right-4 bottom-4 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
     >
-      <IconWhatsApp className="h-8 w-8" />
+      <IconWhatsApp className="block h-8 w-8 shrink-0" />
     </a>
   );
 }
