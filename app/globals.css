@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1c1c1c;
+  --orange: #f26522;
+  --orange-dark: #d35412;
+  --charcoal: #1c1c1c;
+  --muted: #6b6b6b;
+  --surface: #f4f4f4;
+  --line: #e8e8e8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-orange: var(--orange);
+  --color-orange-dark: var(--orange-dark);
+  --color-charcoal: var(--charcoal);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --font-sans: var(--font-plus-jakarta);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plus-jakarta), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #f26522;
+  color: #fff;
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(90deg, rgba(12, 10, 8, 0.82) 0%, rgba(12, 10, 8, 0.55) 48%, rgba(12, 10, 8, 0.35) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.section-kicker {
+  letter-spacing: 0.16em;
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+}
