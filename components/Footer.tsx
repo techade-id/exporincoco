@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { InquiryForm } from "@/components/InquiryForm";
 import { Logo } from "@/components/Logo";
 import { IconMail, IconPin, IconWhatsApp } from "@/components/icons";
@@ -7,11 +10,17 @@ import { site, type Locale } from "@/lib/site";
 
 export function Footer({ locale }: { locale: Locale }) {
   const copy = t(locale);
+  const pathname = usePathname();
+  const hideInquiry = pathname?.includes("/contact");
   const mapsSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapsQuery)}&output=embed`;
 
   return (
     <footer className="bg-charcoal text-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1.1fr_1fr]">
+      <div
+        className={`mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 ${
+          hideInquiry ? "lg:grid-cols-2" : "lg:grid-cols-[1fr_1.1fr_1fr]"
+        }`}
+      >
         <div className="space-y-5">
           <Logo locale={locale} light />
           <div className="space-y-3 text-sm text-white/75">
@@ -56,10 +65,12 @@ export function Footer({ locale }: { locale: Locale }) {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-        <div>
-          <h3 className="mb-4 text-lg font-semibold">{copy.footer.inquiry}</h3>
-          <InquiryForm locale={locale} compact />
-        </div>
+        {hideInquiry ? null : (
+          <div>
+            <h3 className="mb-4 text-lg font-semibold">{copy.footer.inquiry}</h3>
+            <InquiryForm locale={locale} compact />
+          </div>
+        )}
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/45">
         © {new Date().getFullYear()} {site.brand} · {site.legalName}
