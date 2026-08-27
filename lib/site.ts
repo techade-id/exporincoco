@@ -10,6 +10,10 @@ export const site = {
   phoneDisplay: "0823-2226-0278",
   phoneTel: "+6282322260278",
   whatsapp: "6282322260278",
+  whatsappNumbers: [
+    { display: "0823-2226-0278", wa: "6282322260278" },
+    { display: "0858-7639-9054", wa: "6285876399054" },
+  ],
   address: {
     line1: "RT.03/RW.03, Jl. Jajar Sari, Desa Dukuhturi",
     line2: "Kelurahan Kepandean, Kec. Dukuhturi",

@@ -52,7 +52,7 @@ export default async function SpecSheetPage({
       </table>
       <p className="mt-6 text-xs text-muted">{copy.specNote}</p>
       <p className="mt-8 text-sm">
-        {site.email} · {site.phoneDisplay}
+        {site.email} · {site.whatsappNumbers.map((number) => number.display).join(" · ")}
       </p>
       <PrintButton label={copy.products.downloadCta} />
     </article>

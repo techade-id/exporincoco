@@ -58,9 +58,15 @@ export default async function ContactPage({
             <IconWhatsApp className="mt-1 h-5 w-5 text-orange" />
             <div>
               <p className="font-semibold">{copy.contact.whatsapp}</p>
-              <a className="mt-1 block text-sm text-muted" href={`https://wa.me/${site.whatsapp}`}>
-                {site.phoneDisplay}
-              </a>
+              {site.whatsappNumbers.map((number) => (
+                <a
+                  key={number.wa}
+                  className="mt-1 block text-sm text-muted"
+                  href={`https://wa.me/${number.wa}`}
+                >
+                  {number.display}
+                </a>
+              ))}
             </div>
           </div>
           <div className="flex gap-3">

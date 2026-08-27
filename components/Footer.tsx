@@ -30,10 +30,16 @@ export function Footer({ locale }: { locale: Locale }) {
                 {site.address.line1}, {site.address.line2}, {site.address.line3}, {site.address.country}
               </span>
             </p>
-            <p className="flex items-center gap-3">
-              <IconWhatsApp className="h-5 w-5 text-orange" />
-              <a href={`https://wa.me/${site.whatsapp}`}>{site.phoneDisplay}</a>
-            </p>
+            <div className="flex items-start gap-3">
+              <IconWhatsApp className="mt-0.5 h-5 w-5 shrink-0 text-orange" />
+              <div className="space-y-1">
+                {site.whatsappNumbers.map((number) => (
+                  <a key={number.wa} className="block" href={`https://wa.me/${number.wa}`}>
+                    {number.display}
+                  </a>
+                ))}
+              </div>
+            </div>
             <p className="flex items-center gap-3">
               <IconMail className="h-5 w-5 text-orange" />
               <a href={`mailto:${site.email}`}>{site.email}</a>
