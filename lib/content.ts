@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { connection } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { posts as seedPosts } from "@/lib/blog";
@@ -155,6 +156,7 @@ export function persistMode() {
 }
 
 export const getContent = cache(async function getContent(): Promise<Content> {
+  await connection();
   if (blobEnabled()) {
     const remote = await readBlobJson<Partial<Content>>();
     if (remote) return mergeContent(remote);

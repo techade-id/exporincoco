@@ -21,5 +21,7 @@ export async function PUT(request: Request) {
   const content = await saveContent(body.content);
   revalidatePath("/", "layout");
   revalidatePath("/[locale]", "layout");
+  revalidatePath("/en", "layout");
+  revalidatePath("/id", "layout");
   return NextResponse.json({ content, persist: persistMode() });
 }

@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { head, put } from "@vercel/blob";
 
 const CONTENT_PATH = "content.json";
 
@@ -22,12 +22,14 @@ export async function putPublicBlob(
 
 export async function readBlobJson<T>(pathname = CONTENT_PATH): Promise<T | null> {
   if (!blobEnabled()) return null;
-  const { blobs } = await list({ prefix: pathname, limit: 10 });
-  const match = blobs.find((item) => item.pathname === pathname) ?? blobs[0];
-  if (!match) return null;
-  const response = await fetch(match.url, { cache: "no-store" });
-  if (!response.ok) return null;
-  return (await response.json()) as T;
+  try {
+    const info = await head(pathname);
+    const response = await fetch(info.url, { cache: "no-store" });
+    if (!response.ok) return null;
+    return (await response.json()) as T;
+  } catch {
+    return null;
+  }
 }
 
 export async function writeBlobJson(value: unknown, pathname = CONTENT_PATH) {

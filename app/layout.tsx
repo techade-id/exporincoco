@@ -5,6 +5,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { getContent } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
+
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],

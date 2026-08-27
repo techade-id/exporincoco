@@ -61,7 +61,7 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
       setStatus(json.error || "Could not save.");
       return;
     }
-    setStatus("Saved. Open the public site to review.");
+    setStatus("Saved. Refresh the public site (or open View site) to see it.");
   }
 
   async function logout() {
@@ -117,7 +117,12 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
                   <option value="id">Indonesia (ID)</option>
                 </select>
               </label>
-              <a href={lang === "id" ? "/id" : "/en"} target="_blank" rel="noreferrer" className="rounded-lg border border-white/15 px-3 py-2 text-sm">
+              <a
+                href={`${lang === "id" ? "/id" : "/en"}?v=${Date.now()}`}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-lg border border-white/15 px-3 py-2 text-sm"
+              >
                 View site
               </a>
               <button type="button" onClick={logout} className="rounded-lg border border-white/15 px-3 py-2 text-sm">
