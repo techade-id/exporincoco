@@ -28,10 +28,10 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: "/icon.png", type: "image/png", sizes: "512x512" },
-      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/icon.png?v=3", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico?v=3", type: "image/x-icon" },
     ],
-    apple: [{ url: "/apple-icon.png" }],
+    apple: [{ url: "/apple-icon.png?v=3" }],
   },
   openGraph: {
     title: `${site.name} | Indonesian Coconut Charcoal Exporter`,
