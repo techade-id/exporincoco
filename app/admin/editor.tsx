@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useId, useState } from "react";
+import { createContext, useContext, useId, useState, type ReactNode } from "react";
 import { slugify, type Content, type GalleryItem, type PostItem, type ProductItem } from "@/lib/content-types";
 
 type EditorLang = "en" | "id";
@@ -181,6 +181,28 @@ function CollapseButton({
   );
 }
 
+function CollapseItem({
+  id,
+  label,
+  openId,
+  onToggle,
+  children,
+}: {
+  id: string;
+  label: string;
+  openId: string;
+  onToggle: (id: string) => void;
+  children: ReactNode;
+}) {
+  const open = openId === id;
+  return (
+    <div className="rounded-xl border border-white/10 p-4">
+      <CollapseButton open={open} label={label} onClick={() => onToggle(open ? "" : id)} />
+      {open ? <div className="mt-4 space-y-3">{children}</div> : null}
+    </div>
+  );
+}
+
 function Field({
   label,
   value,
@@ -319,16 +341,23 @@ function SiteFields({
   setContent: (content: Content) => void;
 }) {
   const site = content.site;
+  const [open, setOpen] = useState("");
   return (
     <div className="space-y-4">
       <Field label="Brand name" value={site.brand} onChange={(brand) => setContent({ ...content, site: { ...site, brand, name: brand } })} />
       <Field label="Legal name" value={site.legalName} onChange={(legalName) => setContent({ ...content, site: { ...site, legalName } })} />
       <Field label="Email" value={site.email} onChange={(email) => setContent({ ...content, site: { ...site, email } })} />
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="space-y-3">
         {site.whatsappNumbers.map((number, index) => (
-          <div key={index} className="space-y-2 rounded-xl border border-white/10 p-4">
+          <CollapseItem
+            key={index}
+            id={`wa-${index}`}
+            label={number.display || `WhatsApp ${index + 1}`}
+            openId={open}
+            onToggle={setOpen}
+          >
             <Field
-              label={`WhatsApp display ${index + 1}`}
+              label="WhatsApp display"
               value={number.display}
               onChange={(display) => {
                 const whatsappNumbers = site.whatsappNumbers.map((item, i) => (i === index ? { ...item, display } : item));
@@ -351,7 +380,7 @@ function SiteFields({
                 });
               }}
             />
-          </div>
+          </CollapseItem>
         ))}
       </div>
       <Field label="Address line 1" value={site.address.line1} onChange={(line1) => setContent({ ...content, site: { ...site, address: { ...site.address, line1 } } })} />
@@ -375,10 +404,17 @@ function MenuFields({
   setContent: (content: Content) => void;
 }) {
   const { lang } = useLang();
+  const [open, setOpen] = useState("");
   return (
     <div className="space-y-4">
       {content.navItems.map((item, index) => (
-        <div key={index} className="grid gap-3 rounded-xl border border-white/10 p-4 md:grid-cols-[1fr_1fr_auto]">
+        <CollapseItem
+          key={index}
+          id={`nav-${index}`}
+          label={lang === "id" ? item.id : item.en}
+          openId={open}
+          onToggle={setOpen}
+        >
           <Field
             label="Link"
             value={item.href}
@@ -403,12 +439,12 @@ function MenuFields({
           />
           <button
             type="button"
-            className="self-end rounded-lg border border-white/15 px-3 py-2 text-sm"
+            className="rounded-lg border border-white/15 px-3 py-2 text-sm"
             onClick={() => setContent({ ...content, navItems: content.navItems.filter((_, i) => i !== index) })}
           >
             Remove
           </button>
-        </div>
+        </CollapseItem>
       ))}
       <button
         type="button"
@@ -435,6 +471,9 @@ function HomeFields({
 }) {
   const en = content.dictionary.en;
   const id = content.dictionary.id;
+  const { lang } = useLang();
+  const [openValue, setOpenValue] = useState("");
+  const [openQuote, setOpenQuote] = useState("");
   return (
     <div className="space-y-6">
       <Pair label="Hero title" en={en.hero.title} id={id.hero.title} multiline onEn={(title) => setContent(updateCopy(content, "en", { hero: { ...en.hero, title } }))} onId={(title) => setContent(updateCopy(content, "id", { hero: { ...id.hero, title } }))} />
@@ -444,7 +483,13 @@ function HomeFields({
       <ImagePicker label="Home about image" value={content.images.homeAbout} onChange={(homeAbout) => setContent({ ...content, images: { ...content.images, homeAbout } })} />
       <h2 className="text-sm font-semibold">Value cards</h2>
       {en.values.map((value, index) => (
-        <div key={index} className="space-y-3 rounded-md border border-white/10 p-3">
+        <CollapseItem
+          key={index}
+          id={`value-${index}`}
+          label={lang === "id" ? id.values[index]?.title || value.title : value.title}
+          openId={openValue}
+          onToggle={setOpenValue}
+        >
           <Pair
             label="Title"
             en={value.title}
@@ -468,13 +513,19 @@ function HomeFields({
               setContent(updateCopy(content, "id", { values: id.values.map((item, i) => (i === index ? { ...item, text } : item)) }))
             }
           />
-        </div>
+        </CollapseItem>
       ))}
       <Pair label="About teaser" en={en.about.p1} id={id.about.p1} multiline onEn={(p1) => setContent(updateCopy(content, "en", { about: { ...en.about, p1 } }))} onId={(p1) => setContent(updateCopy(content, "id", { about: { ...id.about, p1 } }))} />
       <Pair label="Products heading" en={en.products.title} id={id.products.title} onEn={(title) => setContent(updateCopy(content, "en", { products: { ...en.products, title } }))} onId={(title) => setContent(updateCopy(content, "id", { products: { ...id.products, title } }))} />
       <Pair label="Testimonials heading" en={en.testimonials.title} id={id.testimonials.title} onEn={(title) => setContent(updateCopy(content, "en", { testimonials: { ...en.testimonials, title } }))} onId={(title) => setContent(updateCopy(content, "id", { testimonials: { ...id.testimonials, title } }))} />
       {en.testimonials.items.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
+        <CollapseItem
+          key={index}
+          id={`quote-${index}`}
+          label={item.name}
+          openId={openQuote}
+          onToggle={setOpenQuote}
+        >
           <Pair
             label="Quote"
             en={item.quote}
@@ -510,7 +561,7 @@ function HomeFields({
               });
             }}
           />
-        </div>
+        </CollapseItem>
       ))}
       <Pair label="CTA title" en={en.cta.title} id={id.cta.title} onEn={(title) => setContent(updateCopy(content, "en", { cta: { ...en.cta, title } }))} onId={(title) => setContent(updateCopy(content, "id", { cta: { ...id.cta, title } }))} />
       <Pair label="CTA text" en={en.cta.text} id={id.cta.text} multiline onEn={(text) => setContent(updateCopy(content, "en", { cta: { ...en.cta, text } }))} onId={(text) => setContent(updateCopy(content, "id", { cta: { ...id.cta, text } }))} />
@@ -527,6 +578,8 @@ function AboutFields({
 }) {
   const en = content.dictionary.en;
   const id = content.dictionary.id;
+  const { lang } = useLang();
+  const [openValue, setOpenValue] = useState("");
   return (
     <div className="space-y-4">
       <Pair label="Kicker" en={en.about.kicker} id={id.about.kicker} onEn={(kicker) => setContent(updateCopy(content, "en", { about: { ...en.about, kicker } }))} onId={(kicker) => setContent(updateCopy(content, "id", { about: { ...id.about, kicker } }))} />
@@ -537,6 +590,40 @@ function AboutFields({
       <Pair label="Paragraph 3" en={en.about.p3} id={id.about.p3} multiline onEn={(p3) => setContent(updateCopy(content, "en", { about: { ...en.about, p3 } }))} onId={(p3) => setContent(updateCopy(content, "id", { about: { ...id.about, p3 } }))} />
       <Pair label="Vision" en={en.mission.vision} id={id.mission.vision} multiline onEn={(vision) => setContent(updateCopy(content, "en", { mission: { ...en.mission, vision } }))} onId={(vision) => setContent(updateCopy(content, "id", { mission: { ...id.mission, vision } }))} />
       <Pair label="Mission" en={en.mission.mission} id={id.mission.mission} multiline onEn={(mission) => setContent(updateCopy(content, "en", { mission: { ...en.mission, mission } }))} onId={(mission) => setContent(updateCopy(content, "id", { mission: { ...id.mission, mission } }))} />
+      <h2 className="text-sm font-semibold">Core values</h2>
+      {en.mission.values.map((value, index) => (
+        <CollapseItem
+          key={index}
+          id={`mission-${index}`}
+          label={lang === "id" ? id.mission.values[index]?.title || value.title : value.title}
+          openId={openValue}
+          onToggle={setOpenValue}
+        >
+          <Pair
+            label="Title"
+            en={value.title}
+            id={id.mission.values[index]?.title || ""}
+            onEn={(title) =>
+              setContent(updateCopy(content, "en", { mission: { ...en.mission, values: en.mission.values.map((item, i) => (i === index ? { ...item, title } : item)) } }))
+            }
+            onId={(title) =>
+              setContent(updateCopy(content, "id", { mission: { ...id.mission, values: id.mission.values.map((item, i) => (i === index ? { ...item, title } : item)) } }))
+            }
+          />
+          <Pair
+            label="Text"
+            en={value.text}
+            id={id.mission.values[index]?.text || ""}
+            multiline
+            onEn={(text) =>
+              setContent(updateCopy(content, "en", { mission: { ...en.mission, values: en.mission.values.map((item, i) => (i === index ? { ...item, text } : item)) } }))
+            }
+            onId={(text) =>
+              setContent(updateCopy(content, "id", { mission: { ...id.mission, values: id.mission.values.map((item, i) => (i === index ? { ...item, text } : item)) } }))
+            }
+          />
+        </CollapseItem>
+      ))}
       <Pair label="Network text" en={en.network.text} id={id.network.text} multiline onEn={(text) => setContent(updateCopy(content, "en", { network: { ...en.network, text } }))} onId={(text) => setContent(updateCopy(content, "id", { network: { ...id.network, text } }))} />
       <ImagePicker label="About hero image" value={content.images.aboutHero} onChange={(aboutHero) => setContent({ ...content, images: { ...content.images, aboutHero } })} />
       <ImagePicker label="About photo" value={content.images.about} onChange={(about) => setContent({ ...content, images: { ...content.images, about } })} />
@@ -566,14 +653,13 @@ function ProductFields({
   return (
     <div className="space-y-4">
       {content.products.map((product, index) => (
-        <article key={product.slug} className="rounded-xl border border-white/10 p-4">
-          <CollapseButton
-            open={open === product.slug}
-            label={product[lang].name}
-            onClick={() => setOpen(open === product.slug ? "" : product.slug)}
-          />
-          {open === product.slug ? (
-            <div className="mt-4 space-y-3">
+        <CollapseItem
+          key={product.slug}
+          id={product.slug}
+          label={product[lang].name}
+          openId={open}
+          onToggle={setOpen}
+        >
               <Field
                 label="URL slug"
                 value={product.slug}
@@ -667,9 +753,7 @@ function ProductFields({
                   Delete product
                 </button>
               </div>
-            </div>
-          ) : null}
-        </article>
+        </CollapseItem>
       ))}
       <button
         type="button"
@@ -695,12 +779,21 @@ function PortfolioFields({
 }) {
   const en = content.dictionary.en;
   const id = content.dictionary.id;
+  const { lang } = useLang();
+  const [openCard, setOpenCard] = useState("");
+  const [openPhoto, setOpenPhoto] = useState("");
   return (
     <div className="space-y-4">
       <Pair label="Kicker" en={en.portfolio.kicker} id={id.portfolio.kicker} onEn={(kicker) => setContent(updateCopy(content, "en", { portfolio: { ...en.portfolio, kicker } }))} onId={(kicker) => setContent(updateCopy(content, "id", { portfolio: { ...id.portfolio, kicker } }))} />
       <Pair label="Title" en={en.portfolio.title} id={id.portfolio.title} onEn={(title) => setContent(updateCopy(content, "en", { portfolio: { ...en.portfolio, title } }))} onId={(title) => setContent(updateCopy(content, "id", { portfolio: { ...id.portfolio, title } }))} />
       {en.portfolio.items.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
+        <CollapseItem
+          key={index}
+          id={`card-${index}`}
+          label={lang === "id" ? id.portfolio.items[index]?.title || item.title : item.title}
+          openId={openCard}
+          onToggle={setOpenCard}
+        >
           <Pair
             label="Card title"
             en={item.title}
@@ -733,11 +826,17 @@ function PortfolioFields({
               setContent({ ...content, portfolioPreviewImages: next });
             }}
           />
-        </div>
+        </CollapseItem>
       ))}
       <h2 className="text-sm font-semibold">Portfolio gallery</h2>
       {content.portfolioGallery.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
+        <CollapseItem
+          key={index}
+          id={`photo-${index}`}
+          label={lang === "id" ? item.titleId : item.titleEn}
+          openId={openPhoto}
+          onToggle={setOpenPhoto}
+        >
           <Pair
             label="Caption"
             en={item.titleEn}
@@ -772,7 +871,7 @@ function PortfolioFields({
           >
             Remove photo
           </button>
-        </div>
+        </CollapseItem>
       ))}
       <button
         type="button"
@@ -823,14 +922,13 @@ function BlogFields({
         onId={(title) => setContent(updateCopy(content, "id", { blog: { ...content.dictionary.id.blog, title } }))}
       />
       {content.posts.map((post, index) => (
-        <article key={post.slug} className="rounded-xl border border-white/10 p-4">
-          <CollapseButton
-            open={open === post.slug}
-            label={post[lang].title}
-            onClick={() => setOpen(open === post.slug ? "" : post.slug)}
-          />
-          {open === post.slug ? (
-            <div className="mt-4 space-y-3">
+        <CollapseItem
+          key={post.slug}
+          id={post.slug}
+          label={post[lang].title}
+          openId={open}
+          onToggle={setOpen}
+        >
               <Field
                 label="URL slug"
                 value={post.slug}
@@ -900,9 +998,7 @@ function BlogFields({
               >
                 Delete article
               </button>
-            </div>
-          ) : null}
-        </article>
+        </CollapseItem>
       ))}
       <button
         type="button"
@@ -958,15 +1054,27 @@ function ImageFields({
   setContent: (content: Content) => void;
 }) {
   const images = content.images;
+  const [open, setOpen] = useState("");
+  const items: { id: keyof typeof images; label: string }[] = [
+    { id: "logo", label: "Logo (light background)" },
+    { id: "logoLight", label: "Logo (dark background)" },
+    { id: "hero", label: "Home hero" },
+    { id: "homeAbout", label: "Home about photo" },
+    { id: "aboutHero", label: "About hero" },
+    { id: "about", label: "About photo" },
+    { id: "footerMap", label: "Footer map background" },
+  ];
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <ImagePicker label="Logo (light background)" value={images.logo} onChange={(logo) => setContent({ ...content, images: { ...images, logo } })} />
-      <ImagePicker label="Logo (dark background)" value={images.logoLight} onChange={(logoLight) => setContent({ ...content, images: { ...images, logoLight } })} />
-      <ImagePicker label="Home hero" value={images.hero} onChange={(hero) => setContent({ ...content, images: { ...images, hero } })} />
-      <ImagePicker label="Home about photo" value={images.homeAbout} onChange={(homeAbout) => setContent({ ...content, images: { ...images, homeAbout } })} />
-      <ImagePicker label="About hero" value={images.aboutHero} onChange={(aboutHero) => setContent({ ...content, images: { ...images, aboutHero } })} />
-      <ImagePicker label="About photo" value={images.about} onChange={(about) => setContent({ ...content, images: { ...images, about } })} />
-      <ImagePicker label="Footer map background" value={images.footerMap} onChange={(footerMap) => setContent({ ...content, images: { ...images, footerMap } })} />
+    <div className="space-y-4">
+      {items.map((item) => (
+        <CollapseItem key={item.id} id={item.id} label={item.label} openId={open} onToggle={setOpen}>
+          <ImagePicker
+            label={item.label}
+            value={images[item.id]}
+            onChange={(value) => setContent({ ...content, images: { ...images, [item.id]: value } })}
+          />
+        </CollapseItem>
+      ))}
     </div>
   );
 }
