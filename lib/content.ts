@@ -5,6 +5,7 @@ import { posts as seedPosts } from "@/lib/blog";
 import { dictionary as seedDictionary } from "@/lib/i18n";
 import { products as seedProducts } from "@/lib/products";
 import { inquiryCountries as seedCountries, markets as seedMarkets, site as seedSite } from "@/lib/site";
+import { blobEnabled, readBlobJson, writeBlobJson } from "@/lib/blob-store";
 import type { Content, MarketItem, ProductItem, PostItem, SiteInfo } from "@/lib/content-types";
 
 export type {
@@ -148,11 +149,16 @@ async function writeJsonFile(filePath: string, content: Content) {
 }
 
 export function persistMode() {
+  if (blobEnabled()) return "blob" as const;
   if (githubConfig()) return "github" as const;
   return "file" as const;
 }
 
 export const getContent = cache(async function getContent(): Promise<Content> {
+  if (blobEnabled()) {
+    const remote = await readBlobJson<Partial<Content>>();
+    if (remote) return mergeContent(remote);
+  }
   if (githubConfig()) {
     const remote = await githubGetFile("data/content.json");
     if (remote) return mergeContent(JSON.parse(remote.text) as Partial<Content>);
@@ -167,6 +173,10 @@ export async function saveContent(next: Content) {
   const content = mergeContent(next);
   await writeJsonFile(RUNTIME_FILE, content).catch(() => undefined);
   await writeJsonFile(CONTENT_FILE, content).catch(() => undefined);
+  if (blobEnabled()) {
+    await writeBlobJson(content);
+    return content;
+  }
   if (githubConfig()) {
     const ok = await githubPutFile(
       "data/content.json",

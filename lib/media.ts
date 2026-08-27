@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { blobEnabled, putPublicBlob } from "@/lib/blob-store";
 import { githubPutFile, persistMode } from "@/lib/content";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public", "uploads");
@@ -34,6 +35,10 @@ export async function saveUpload(file: File) {
   await writeLocal(path.join(PUBLIC_DIR, filename), bytes).catch(() => undefined);
   await writeLocal(path.join(DATA_DIR, filename), bytes).catch(() => undefined);
   await writeLocal(path.join(TMP_DIR, filename), bytes).catch(() => undefined);
+
+  if (blobEnabled()) {
+    return putPublicBlob(`uploads/${filename}`, bytes, file.type || "image/jpeg");
+  }
 
   if (persistMode() === "github") {
     const ok = await githubPutFile(
