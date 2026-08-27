@@ -40,7 +40,7 @@ const sections: { id: Section; label: string }[] = [
 const inputClass =
   "w-full rounded-md border border-white/15 bg-[#1c1c1c] px-3 py-2 text-sm text-white outline-none focus:border-orange";
 
-export function Editor({ initial, persist }: { initial: Content; persist: "file" | "github" | "blob" }) {
+export function Editor({ initial }: { initial: Content }) {
   const [content, setContent] = useState(initial);
   const [section, setSection] = useState<Section>("site");
   const [lang, setLang] = useState<EditorLang>("en");
@@ -95,19 +95,6 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
               </button>
             ))}
           </nav>
-          <div className="mt-6 space-y-2 text-xs text-white/50">
-            <p>
-              Storage:{" "}
-              {persist === "blob"
-                ? "Vercel Blob (private store)"
-                : persist === "github"
-                  ? "GitHub (keeps edits live)"
-                  : "this server only"}
-            </p>
-            {persist === "file" ? (
-              <p>Add a Vercel Blob store so image uploads survive deploys.</p>
-            ) : null}
-          </div>
         </aside>
         <div className="flex-1 p-4 sm:p-6">
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
