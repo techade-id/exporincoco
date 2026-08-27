@@ -50,7 +50,7 @@ export function WhatsAppButton({ locale }: { locale: Locale }) {
         aria-label={copy.wa.label}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="ml-auto flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+        className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
       >
         <IconWhatsApp className="block h-8 w-8 shrink-0" />
       </button>
