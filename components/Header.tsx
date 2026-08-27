@@ -6,16 +6,8 @@ import { useState } from "react";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { IconClose, IconGlobe, IconMenu } from "@/components/icons";
-import { t } from "@/lib/i18n";
+import type { LocaleCopy, NavItem, SiteImages } from "@/lib/content-types";
 import { localizedPath, type Locale } from "@/lib/site";
-
-const links = [
-  { key: "home", href: "/" },
-  { key: "about", href: "/about" },
-  { key: "products", href: "/products" },
-  { key: "blog", href: "/blog" },
-  { key: "contact", href: "/contact" },
-] as const;
 
 function switchLocale(pathname: string, next: Locale) {
   const parts = pathname.split("/");
@@ -26,18 +18,27 @@ function switchLocale(pathname: string, next: Locale) {
   return `/${next}`;
 }
 
-export function Header({ locale }: { locale: Locale }) {
+export function Header({
+  locale,
+  copy,
+  navItems,
+  images,
+}: {
+  locale: Locale;
+  copy: LocaleCopy;
+  navItems: NavItem[];
+  images: SiteImages;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const copy = t(locale);
   const nextLocale: Locale = locale === "en" ? "id" : "en";
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Logo locale={locale} />
+        <Logo locale={locale} logo={images.logo} logoLight={images.logoLight} />
         <nav className="hidden items-center gap-8 md:flex">
-          {links.map((link) => {
+          {navItems.map((link) => {
             const href = localizedPath(locale, link.href);
             const active =
               link.href === "/"
@@ -45,13 +46,13 @@ export function Header({ locale }: { locale: Locale }) {
                 : pathname.startsWith(href);
             return (
               <Link
-                key={link.key}
+                key={`${link.href}-${link.en}`}
                 href={href}
                 className={`text-sm font-medium transition-colors ${
                   active ? "text-orange" : "text-ink hover:text-orange"
                 }`}
               >
-                {copy.nav[link.key]}
+                {locale === "id" ? link.id : link.en}
               </Link>
             );
           })}
@@ -64,7 +65,7 @@ export function Header({ locale }: { locale: Locale }) {
             <IconGlobe className="h-4 w-4" />
             <span>{copy.language}</span>
           </Link>
-          <ThemeToggle locale={locale} />
+          <ThemeToggle lightLabel={copy.theme.light} darkLabel={copy.theme.dark} />
           <button
             type="button"
             className="text-ink md:hidden"
@@ -78,14 +79,14 @@ export function Header({ locale }: { locale: Locale }) {
       {open ? (
         <nav className="border-t border-line bg-background px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
-            {links.map((link) => (
+            {navItems.map((link) => (
               <Link
-                key={link.key}
+                key={`${link.href}-${link.en}`}
                 href={localizedPath(locale, link.href)}
                 className="text-base font-medium text-ink"
                 onClick={() => setOpen(false)}
               >
-                {copy.nav[link.key]}
+                {locale === "id" ? link.id : link.en}
               </Link>
             ))}
           </div>

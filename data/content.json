@@ -1,0 +1,917 @@
+{
+  "site": {
+    "name": "Eksporin Coco",
+    "legalName": "PT Ekspor Indonesia Aja",
+    "brand": "Eksporin Coco",
+    "email": "eksporinaja@gmail.com",
+    "phoneDisplay": "0823-2226-0278",
+    "phoneTel": "+6282322260278",
+    "whatsapp": "6282322260278",
+    "whatsappNumbers": [
+      {
+        "display": "0823-2226-0278",
+        "wa": "6282322260278"
+      },
+      {
+        "display": "0858-7639-9054",
+        "wa": "6285876399054"
+      }
+    ],
+    "address": {
+      "line1": "RT.03/RW.03, Jl. Jajar Sari, Desa Dukuhturi",
+      "line2": "Kelurahan Kepandean, Kec. Dukuhturi",
+      "line3": "Kabupaten Tegal, Jawa Tengah 52192",
+      "country": "Indonesia",
+      "mapsQuery": "Jl. Jajar Sari, Dukuhturi, Kabupaten Tegal, Jawa Tengah 52192"
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "linkedin": "https://www.linkedin.com/",
+      "tiktok": "https://www.tiktok.com/"
+    }
+  },
+  "navItems": [
+    {
+      "href": "/",
+      "en": "Home",
+      "id": "Beranda"
+    },
+    {
+      "href": "/about",
+      "en": "About",
+      "id": "Tentang"
+    },
+    {
+      "href": "/products",
+      "en": "Products",
+      "id": "Produk"
+    },
+    {
+      "href": "/blog",
+      "en": "Blog",
+      "id": "Blog"
+    },
+    {
+      "href": "/contact",
+      "en": "Contact",
+      "id": "Kontak"
+    }
+  ],
+  "images": {
+    "logo": "/images/logo.png",
+    "logoLight": "/images/logo-light.png",
+    "hero": "/images/hero.jpg",
+    "homeAbout": "/images/containers.jpg",
+    "aboutHero": "/images/about-hero.jpg",
+    "about": "/images/containers.jpg",
+    "footerMap": "/images/ship.jpg"
+  },
+  "dictionary": {
+    "en": {
+      "nav": {
+        "home": "Home",
+        "about": "About",
+        "products": "Products",
+        "portfolio": "Portfolio",
+        "blog": "Blog",
+        "contact": "Contact"
+      },
+      "language": "English",
+      "theme": {
+        "light": "Switch to light mode",
+        "dark": "Switch to dark mode"
+      },
+      "hero": {
+        "title": "Trusted Indonesian Exporter of Coconut Charcoal Briquettes & Coconut-Based Products",
+        "requestQuote": "Request a Quote",
+        "contactUs": "Contact Us"
+      },
+      "values": [
+        {
+          "title": "Safe Delivery",
+          "text": "Sea route export with documented packing and stuffing."
+        },
+        {
+          "title": "Premium Quality",
+          "text": "Carefully selected materials from Indonesian producers."
+        },
+        {
+          "title": "Reliable Supply",
+          "text": "Consistent quality and on-time delivery programs."
+        },
+        {
+          "title": "Competitive Price",
+          "text": "Best value for long-term partnership."
+        }
+      ],
+      "about": {
+        "kicker": "About Us",
+        "title": "About Eksporin Coco",
+        "lead": "Connecting Indonesia’s natural resources to global markets through quality and trust.",
+        "p1": "Eksporin Coco, powered by PT Ekspor Indonesia Aja, is an Indonesian supplier and exporter specializing in coconut-based products and charcoal briquettes for international markets.",
+        "p2": "We supply coconut charcoal briquettes, copra, coconut oil, coconut shell charcoal, and wood charcoal — committed to consistent quality, reliable supply, competitive pricing, and professional export service.",
+        "p3": "With strong connections to local producers and suppliers across Indonesia, Eksporin Coco brings Indonesia’s natural coconut resources to global markets efficiently and reliably."
+      },
+      "products": {
+        "title": "Our Products",
+        "view": "View Product",
+        "related": "Related Product",
+        "specs": "Specifications",
+        "downloadTitle": "Download Product Spec Sheet",
+        "downloadText": "Get detailed technical specifications in a print-ready sheet.",
+        "downloadCta": "Download / Print PDF"
+      },
+      "portfolio": {
+        "kicker": "Portfolio & Credibility",
+        "title": "Proven Quality, Trusted By Global Buyers.",
+        "view": "View Portfolio",
+        "items": [
+          {
+            "title": "Production Process",
+            "text": "Sourcing, carbonization, and packing documentation."
+          },
+          {
+            "title": "Shipment Process",
+            "text": "Container stuffing, documents, and sea-route delivery."
+          },
+          {
+            "title": "Our Clients",
+            "text": "Long-term buyers and trading partners across export markets."
+          }
+        ]
+      },
+      "markets": {
+        "title": "Trusted by Global Buyers"
+      },
+      "testimonials": {
+        "title": "What Our Clients Say",
+        "items": [
+          {
+            "quote": "Communication was clear, packing photos were complete, and the briquettes performed as quoted. We are planning a repeat container.",
+            "name": "James R.",
+            "role": "Procurement Manager",
+            "country": "USA"
+          },
+          {
+            "quote": "Ash and burning time were consistent with the sample. The team responded quickly on WhatsApp and email during stuffing.",
+            "name": "Khalid A.",
+            "role": "Import Buyer",
+            "country": "Saudi Arabia"
+          },
+          {
+            "quote": "A professional Indonesian partner for coconut charcoal. Specs, MOQ, and loading weights were explained before we committed.",
+            "name": "Omar S.",
+            "role": "Trading Manager",
+            "country": "UAE"
+          }
+        ]
+      },
+      "blog": {
+        "title": "Explore Our Blog",
+        "readMore": "Read more",
+        "author": "By"
+      },
+      "cta": {
+        "kicker": "Let’s work together",
+        "title": "Ready to Import Quality From Indonesia?",
+        "text": "Contact us today for product information, pricing, or business inquiries.",
+        "button": "Contact Us"
+      },
+      "mission": {
+        "title": "Mission, Vision & Core Values",
+        "visionTitle": "Our Vision",
+        "vision": "To be the preferred Indonesian exporter of coconut-based products, recognized globally for quality, reliability, and sustainability.",
+        "missionTitle": "Our Mission",
+        "mission": "To deliver premium coconut-based products through continuous improvement, strong producer partnerships, and responsible export practices.",
+        "valuesTitle": "Our Core Values",
+        "values": [
+          {
+            "title": "Quality",
+            "text": "Consistent specs and honest product information."
+          },
+          {
+            "title": "Reliable Supply",
+            "text": "On-time programs backed by a producer network."
+          },
+          {
+            "title": "Competitive Pricing",
+            "text": "Fair value for long-term buyers."
+          }
+        ]
+      },
+      "network": {
+        "title": "Our Supplier Network",
+        "text": "We work with local producers and suppliers across key coconut and charcoal regions in Indonesia — supporting consistent volume while keeping a short line from farm and kiln to export container.",
+        "points": [
+          "Local producers and suppliers across key regions in Indonesia",
+          "Supporting sustainable practices and local communities"
+        ]
+      },
+      "contact": {
+        "title": "Contact Us",
+        "lead": "Request a quote, ask for specifications, or start an export conversation.",
+        "address": "Address",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "follow": "Follow Us",
+        "formTitle": "Send Us an Inquiry",
+        "name": "Your Name",
+        "company": "Company Name",
+        "country": "Country",
+        "countryPlaceholder": "Select country",
+        "emailField": "Email Address",
+        "product": "Product Interest",
+        "productPlaceholder": "Select product",
+        "phone": "Phone / WhatsApp",
+        "message": "Message",
+        "captcha": "I am not a robot",
+        "submit": "Send Inquiry",
+        "sending": "Sending…",
+        "success": "Thank you. WhatsApp should open with your inquiry. If it does not, tap a number below to send it to our sales team.",
+        "error": "Please complete the required fields.",
+        "openWhatsApp": "Continue on WhatsApp",
+        "mapTitle": "Office location"
+      },
+      "footer": {
+        "inquiry": "Send Us an Inquiry"
+      },
+      "wa": {
+        "label": "Chat on WhatsApp",
+        "choose": "Choose a WhatsApp number",
+        "defaultMessage": "Hello Eksporin Coco, I would like to inquire about coconut charcoal briquettes and coconut-based products."
+      },
+      "specNote": "Typical export grades. Final specifications are confirmed with our production / QC team per order."
+    },
+    "id": {
+      "nav": {
+        "home": "Beranda",
+        "about": "Tentang",
+        "products": "Produk",
+        "portfolio": "Portofolio",
+        "blog": "Blog",
+        "contact": "Kontak"
+      },
+      "language": "Indonesia",
+      "theme": {
+        "light": "Ganti ke mode terang",
+        "dark": "Ganti ke mode gelap"
+      },
+      "hero": {
+        "title": "Eksportir Indonesia Terpercaya untuk Briket Arang Kelapa & Produk Berbasis Kelapa",
+        "requestQuote": "Minta Penawaran",
+        "contactUs": "Hubungi Kami"
+      },
+      "values": [
+        {
+          "title": "Pengiriman Aman",
+          "text": "Ekspor jalur laut dengan packing dan stuffing terdokumentasi."
+        },
+        {
+          "title": "Mutu Premium",
+          "text": "Bahan pilihan dari produsen Indonesia."
+        },
+        {
+          "title": "Pasokan Andal",
+          "text": "Mutu konsisten dan program pengiriman tepat waktu."
+        },
+        {
+          "title": "Harga Kompetitif",
+          "text": "Nilai terbaik untuk kemitraan jangka panjang."
+        }
+      ],
+      "about": {
+        "kicker": "Tentang Kami",
+        "title": "Tentang Eksporin Coco",
+        "lead": "Menghubungkan sumber daya alam Indonesia ke pasar global melalui mutu dan kepercayaan.",
+        "p1": "Eksporin Coco, di bawah PT Ekspor Indonesia Aja, adalah pemasok dan eksportir Indonesia yang berfokus pada produk berbasis kelapa dan briket arang untuk pasar internasional.",
+        "p2": "Kami memasok briket arang kelapa, kopra, minyak kelapa, arang tempurung kelapa, dan arang kayu — dengan komitmen pada mutu konsisten, pasokan andal, harga kompetitif, dan layanan ekspor profesional.",
+        "p3": "Dengan koneksi kuat ke produsen dan pemasok lokal di seluruh Indonesia, Eksporin Coco membawa sumber daya kelapa Indonesia ke pasar global secara efisien dan andal."
+      },
+      "products": {
+        "title": "Produk Kami",
+        "view": "Lihat Produk",
+        "related": "Produk Terkait",
+        "specs": "Spesifikasi",
+        "downloadTitle": "Unduh Lembar Spek Produk",
+        "downloadText": "Dapatkan spesifikasi teknis lengkap dalam lembar siap cetak.",
+        "downloadCta": "Unduh / Cetak PDF"
+      },
+      "portfolio": {
+        "kicker": "Portofolio & Kredibilitas",
+        "title": "Mutu Terbukti, Dipercaya Pembeli Global.",
+        "view": "Lihat Portofolio",
+        "items": [
+          {
+            "title": "Proses Produksi",
+            "text": "Dokumentasi sourcing, karbonisasi, dan packing."
+          },
+          {
+            "title": "Proses Pengiriman",
+            "text": "Stuffing kontainer, dokumen, dan pengiriman jalur laut."
+          },
+          {
+            "title": "Klien Kami",
+            "text": "Pembeli jangka panjang dan mitra dagang di pasar ekspor."
+          }
+        ]
+      },
+      "markets": {
+        "title": "Dipercaya Pembeli Global"
+      },
+      "testimonials": {
+        "title": "Kata Klien Kami",
+        "items": [
+          {
+            "quote": "Komunikasi jelas, foto packing lengkap, dan briket sesuai penawaran. Kami merencanakan kontainer berikutnya.",
+            "name": "James R.",
+            "role": "Manajer Pengadaan",
+            "country": "USA"
+          },
+          {
+            "quote": "Abu dan waktu bakar konsisten dengan sampel. Tim merespons cepat di WhatsApp dan email saat stuffing.",
+            "name": "Khalid A.",
+            "role": "Pembeli Impor",
+            "country": "Arab Saudi"
+          },
+          {
+            "quote": "Mitra Indonesia yang profesional untuk arang kelapa. Spek, MOQ, dan bobot muat dijelaskan sebelum kami commit.",
+            "name": "Omar S.",
+            "role": "Manajer Trading",
+            "country": "UEA"
+          }
+        ]
+      },
+      "blog": {
+        "title": "Jelajahi Blog Kami",
+        "readMore": "Baca selengkapnya",
+        "author": "Oleh"
+      },
+      "cta": {
+        "kicker": "Mari bekerja sama",
+        "title": "Siap Mengimpor Mutu dari Indonesia?",
+        "text": "Hubungi kami hari ini untuk informasi produk, harga, atau pertanyaan bisnis.",
+        "button": "Hubungi Kami"
+      },
+      "mission": {
+        "title": "Misi, Visi & Nilai Inti",
+        "visionTitle": "Visi Kami",
+        "vision": "Menjadi eksportir Indonesia pilihan untuk produk berbasis kelapa, dikenal secara global atas mutu, keandalan, dan keberlanjutan.",
+        "missionTitle": "Misi Kami",
+        "mission": "Menghadirkan produk berbasis kelapa berkualitas melalui perbaikan berkelanjutan, kemitraan produsen yang kuat, dan praktik ekspor yang bertanggung jawab.",
+        "valuesTitle": "Nilai Inti Kami",
+        "values": [
+          {
+            "title": "Mutu",
+            "text": "Spek konsisten dan informasi produk yang jujur."
+          },
+          {
+            "title": "Pasokan Andal",
+            "text": "Program tepat waktu yang ditopang jaringan produsen."
+          },
+          {
+            "title": "Harga Kompetitif",
+            "text": "Nilai yang adil untuk pembeli jangka panjang."
+          }
+        ]
+      },
+      "network": {
+        "title": "Jaringan Pemasok Kami",
+        "text": "Kami bekerja dengan produsen dan pemasok lokal di wilayah kelapa dan arang utama Indonesia — menjaga volume konsisten dengan jalur pendek dari kebun dan kiln ke kontainer ekspor.",
+        "points": [
+          "Produsen dan pemasok lokal di wilayah kunci Indonesia",
+          "Mendukung praktik berkelanjutan dan komunitas lokal"
+        ]
+      },
+      "contact": {
+        "title": "Hubungi Kami",
+        "lead": "Minta penawaran, spek, atau mulai percakapan ekspor.",
+        "address": "Alamat",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "follow": "Ikuti Kami",
+        "formTitle": "Kirim Inquiry",
+        "name": "Nama Anda",
+        "company": "Nama Perusahaan",
+        "country": "Negara",
+        "countryPlaceholder": "Pilih negara",
+        "emailField": "Alamat Email",
+        "product": "Produk yang Diminati",
+        "productPlaceholder": "Pilih produk",
+        "phone": "Telepon / WhatsApp",
+        "message": "Pesan",
+        "captcha": "Saya bukan robot",
+        "submit": "Kirim Inquiry",
+        "sending": "Mengirim…",
+        "success": "Terima kasih. WhatsApp seharusnya terbuka dengan inquiry Anda. Jika tidak, ketuk nomor di bawah untuk mengirim ke tim sales.",
+        "error": "Lengkapi kolom yang wajib diisi.",
+        "openWhatsApp": "Lanjut di WhatsApp",
+        "mapTitle": "Lokasi kantor"
+      },
+      "footer": {
+        "inquiry": "Kirim Inquiry"
+      },
+      "wa": {
+        "label": "Chat WhatsApp",
+        "choose": "Pilih nomor WhatsApp",
+        "defaultMessage": "Halo Eksporin Coco, saya ingin menanyakan briket arang kelapa dan produk berbasis kelapa."
+      },
+      "specNote": "Grade ekspor tipikal. Spesifikasi akhir dikonfirmasi bersama tim produksi / QC per pesanan."
+    }
+  },
+  "products": [
+    {
+      "slug": "coconut-charcoal-briquettes",
+      "image": "/images/briquettes.jpg",
+      "en": {
+        "name": "Coconut Charcoal Briquettes",
+        "short": "Clean-burning cube and hexagonal briquettes for shisha and BBQ export markets.",
+        "description": "Premium coconut charcoal briquettes made from selected Indonesian coconut shells. Controlled carbonization and pressing produce a dense, low-ash briquette with long, stable heat — suitable for shisha, BBQ, and food-service buyers who need consistent quality shipment after shipment."
+      },
+      "id": {
+        "name": "Briket Arang Kelapa",
+        "short": "Briket kubus dan heksagonal yang terbakar bersih untuk pasar shisha dan BBQ.",
+        "description": "Briket arang kelapa premium dari tempurung kelapa Indonesia pilihan. Karbonisasi dan pencetakan yang terkontrol menghasilkan briket padat, rendah abu, dengan panas yang tahan lama dan stabil — cocok untuk pembeli shisha, BBQ, dan food service yang membutuhkan mutu konsisten di setiap pengiriman."
+      },
+      "specs": [
+        {
+          "label": "Product Type",
+          "value": "Coconut charcoal briquettes"
+        },
+        {
+          "label": "Shape",
+          "value": "Cube / Hexagonal / Finger / Custom"
+        },
+        {
+          "label": "Size",
+          "value": "25 × 25 × 25 mm (cube) or as requested"
+        },
+        {
+          "label": "Fixed Carbon",
+          "value": "≥ 80%"
+        },
+        {
+          "label": "Moisture Content",
+          "value": "≤ 6%"
+        },
+        {
+          "label": "Ash Content",
+          "value": "1.8–2.5%"
+        },
+        {
+          "label": "Calorific Value",
+          "value": "7,000–7,500 kcal/kg"
+        },
+        {
+          "label": "Burning Time",
+          "value": "90–120 minutes"
+        },
+        {
+          "label": "Ignition Time",
+          "value": "Approx. 8–12 minutes"
+        },
+        {
+          "label": "Application",
+          "value": "Shisha / BBQ / food service"
+        },
+        {
+          "label": "Packing",
+          "value": "Inner box + master carton / custom OEM"
+        },
+        {
+          "label": "MOQ",
+          "value": "1 × 20 ft container (confirm with sales)"
+        },
+        {
+          "label": "Loading Capacity",
+          "value": "20 ft ~10–12 MT · 40 HQ ~18–22 MT"
+        },
+        {
+          "label": "Origin",
+          "value": "Indonesia"
+        }
+      ]
+    },
+    {
+      "slug": "copra",
+      "image": "/images/copra.jpg",
+      "en": {
+        "name": "Copra",
+        "short": "Dried coconut meat from mature Indonesian coconuts for oil mills and traders.",
+        "description": "Copra is the dried kernel of mature coconuts, supplied for coconut oil extraction and further processing. We work with local producers to deliver sun-dried or kiln-dried copra with competitive oil content, controlled moisture, and export-ready packing."
+      },
+      "id": {
+        "name": "Kopra",
+        "short": "Daging kelapa kering dari kelapa Indonesia matang untuk pabrik minyak dan trader.",
+        "description": "Kopra adalah daging kelapa matang yang dikeringkan, dipasok untuk ekstraksi minyak kelapa dan pengolahan lanjutan. Kami bekerja dengan produsen lokal untuk menyediakan kopra kering matahari atau kiln dengan kadar minyak kompetitif, kelembapan terkontrol, dan kemasan siap ekspor."
+      },
+      "specs": [
+        {
+          "label": "Product Type",
+          "value": "Dried coconut meat (copra)"
+        },
+        {
+          "label": "Color",
+          "value": "White to light brown"
+        },
+        {
+          "label": "Moisture Content",
+          "value": "6–8%"
+        },
+        {
+          "label": "Oil Content",
+          "value": "60–65%"
+        },
+        {
+          "label": "FFA",
+          "value": "Typically ≤ 1% (grade dependent)"
+        },
+        {
+          "label": "Texture",
+          "value": "Firm, fully dried mature kernel"
+        },
+        {
+          "label": "Application",
+          "value": "Coconut oil milling / feed / trading"
+        },
+        {
+          "label": "Packing",
+          "value": "PP bags 50–80 kg / as requested"
+        },
+        {
+          "label": "MOQ",
+          "value": "1 × 20 ft container (confirm with sales)"
+        },
+        {
+          "label": "Loading Capacity",
+          "value": "20 ft ~16–18 MT"
+        },
+        {
+          "label": "Origin",
+          "value": "Indonesia"
+        }
+      ]
+    },
+    {
+      "slug": "coconut-oil",
+      "image": "/images/oil-generic.jpg",
+      "en": {
+        "name": "Coconut Oil",
+        "short": "Crude, RBD, and virgin coconut oil sourced from Indonesian copra and fresh coconut.",
+        "description": "Indonesian coconut oil for food, oleochemical, and personal-care buyers. Depending on your market, we can arrange crude coconut oil (CNO), refined bleached deodorized (RBD) oil, or virgin coconut oil in flexibag, IBC, or drum packing."
+      },
+      "id": {
+        "name": "Minyak Kelapa",
+        "short": "Minyak kelapa mentah, RBD, dan virgin dari kopra serta kelapa segar Indonesia.",
+        "description": "Minyak kelapa Indonesia untuk pembeli makanan, oleokimia, dan personal care. Sesuai kebutuhan pasar, kami dapat mengatur CNO, minyak RBD, atau virgin coconut oil dalam kemasan flexibag, IBC, atau drum."
+      },
+      "specs": [
+        {
+          "label": "Product Type",
+          "value": "CNO / RBD / Virgin coconut oil"
+        },
+        {
+          "label": "Appearance",
+          "value": "Clear to pale yellow (grade dependent)"
+        },
+        {
+          "label": "FFA (CNO)",
+          "value": "Typically ≤ 1–3%"
+        },
+        {
+          "label": "Moisture & Impurities",
+          "value": "≤ 0.5%"
+        },
+        {
+          "label": "Odor",
+          "value": "Characteristic coconut / neutral (RBD)"
+        },
+        {
+          "label": "Application",
+          "value": "Food / oleochemical / cosmetics"
+        },
+        {
+          "label": "Packing",
+          "value": "Flexibag / IBC / 190 kg drums"
+        },
+        {
+          "label": "MOQ",
+          "value": "1 × 20 ft container (confirm with sales)"
+        },
+        {
+          "label": "Loading Capacity",
+          "value": "20 ft flexibag ~20–21 MT"
+        },
+        {
+          "label": "Origin",
+          "value": "Indonesia"
+        }
+      ]
+    },
+    {
+      "slug": "coconut-shell-charcoal",
+      "image": "/images/shell-charcoal.jpg",
+      "en": {
+        "name": "Coconut Shell Charcoal",
+        "short": "High-calorific lump charcoal from natural coconut shells for BBQ, shisha, and industry.",
+        "description": "Coconut shell charcoal produced from natural Indonesian coconut shells through controlled carbonization. It offers high calorific value, long burning time, and low ash — used as BBQ and industrial fuel, or as raw material for coconut charcoal briquettes."
+      },
+      "id": {
+        "name": "Arang Tempurung Kelapa",
+        "short": "Arang bongkah berkadar kalori tinggi dari tempurung kelapa alami.",
+        "description": "Arang tempurung kelapa dari tempurung kelapa Indonesia melalui karbonisasi terkontrol. Memiliki nilai kalor tinggi, waktu bakar lama, dan abu rendah — digunakan sebagai bahan bakar BBQ dan industri, atau bahan baku briket arang kelapa."
+      },
+      "specs": [
+        {
+          "label": "Product Type",
+          "value": "Coconut shell charcoal"
+        },
+        {
+          "label": "Fixed Carbon",
+          "value": "75–85%"
+        },
+        {
+          "label": "Moisture Content",
+          "value": "5–8%"
+        },
+        {
+          "label": "Ash Content",
+          "value": "2–5%"
+        },
+        {
+          "label": "Calorific Value",
+          "value": "7,000–7,500 kcal/kg"
+        },
+        {
+          "label": "Burning Time",
+          "value": "Long-lasting and stable heat"
+        },
+        {
+          "label": "Appearance",
+          "value": "Black charcoal shell pieces"
+        },
+        {
+          "label": "Form",
+          "value": "Lump / granule / crushed"
+        },
+        {
+          "label": "Application",
+          "value": "BBQ / shisha briquette / industrial fuel / heating"
+        },
+        {
+          "label": "Packing",
+          "value": "PP bag / jumbo bag"
+        },
+        {
+          "label": "MOQ",
+          "value": "To be confirmed with production / QC"
+        },
+        {
+          "label": "Loading Capacity",
+          "value": "20 ft 18–20 MT · 40 ft 25–28 MT"
+        },
+        {
+          "label": "Origin",
+          "value": "Indonesia"
+        }
+      ]
+    },
+    {
+      "slug": "wood-charcoal",
+      "image": "/images/wood-charcoal.jpg",
+      "en": {
+        "name": "Wood Charcoal",
+        "short": "Hardwood charcoal for BBQ and industrial heating, sourced from Indonesian producers.",
+        "description": "Wood charcoal supplied through our producer network across Indonesia. Suitable for restaurant BBQ, retail packing, and industrial heating where buyers need reliable volume and export documentation."
+      },
+      "id": {
+        "name": "Arang Kayu",
+        "short": "Arang kayu keras untuk BBQ dan pemanas industri dari produsen Indonesia.",
+        "description": "Arang kayu yang dipasok melalui jaringan produsen kami di Indonesia. Cocok untuk BBQ restoran, kemasan ritel, dan pemanas industri di mana pembeli membutuhkan volume yang andal dan dokumen ekspor."
+      },
+      "specs": [
+        {
+          "label": "Product Type",
+          "value": "Hardwood charcoal"
+        },
+        {
+          "label": "Fixed Carbon",
+          "value": "70–80%"
+        },
+        {
+          "label": "Moisture Content",
+          "value": "≤ 8%"
+        },
+        {
+          "label": "Ash Content",
+          "value": "3–6%"
+        },
+        {
+          "label": "Calorific Value",
+          "value": "6,500–7,200 kcal/kg"
+        },
+        {
+          "label": "Form",
+          "value": "Lump / mixed size"
+        },
+        {
+          "label": "Application",
+          "value": "BBQ / restaurant / industrial heating"
+        },
+        {
+          "label": "Packing",
+          "value": "10–20 kg bags / jumbo bag"
+        },
+        {
+          "label": "MOQ",
+          "value": "1 × 20 ft container (confirm with sales)"
+        },
+        {
+          "label": "Loading Capacity",
+          "value": "20 ft ~18–20 MT"
+        },
+        {
+          "label": "Origin",
+          "value": "Indonesia"
+        }
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "slug": "indonesian-export-partner",
+      "image": "/images/blog-partner.jpg",
+      "date": "2026-03-12",
+      "author": "Eksporin Coco",
+      "en": {
+        "title": "What International Buyers Should Look for in an Indonesian Export Partner",
+        "excerpt": "A practical checklist for importers evaluating coconut charcoal and coconut-based suppliers from Indonesia.",
+        "body": [
+          "Indonesia is one of the world’s most important sources of coconut charcoal briquettes, copra, coconut oil, and related coconut products. For international buyers, the challenge is rarely finding a supplier — it is finding one that can repeat the same quality, documents, and loading schedule across multiple shipments.",
+          "Start with identity and communication. A reliable partner should have a clear legal entity, a working office or workshop address, and a sales contact that responds in English with product specs, packing photos, and realistic lead times. WhatsApp is common in this trade; it should complement — not replace — written quotations and packing lists.",
+          "Ask for specification ranges, not marketing adjectives. Moisture, ash, fixed carbon, calorific value, shape, packing, and container loading weights tell you more than “premium” or “export quality.” Confirm whether figures are typical production grades and how they are checked before stuffing.",
+          "Supply reliability matters as much as price. Coconut raw material is seasonal and regional. A partner with a network of producers across Indonesia can absorb local shortages better than a single small factory. Request recent loading photos, a sample policy, and a clear MOQ.",
+          "Finally, align on payment, inspection, and after-sales handling of claims. The best Indonesian export partners treat the first container as the start of a long-term program, not a one-off sale."
+        ]
+      },
+      "id": {
+        "title": "Yang Perlu Diperhatikan Pembeli Internasional saat Memilih Mitra Ekspor Indonesia",
+        "excerpt": "Daftar periksa praktis bagi importir yang menilai pemasok arang kelapa dan produk berbasis kelapa dari Indonesia.",
+        "body": [
+          "Indonesia adalah salah satu sumber terpenting di dunia untuk briket arang kelapa, kopra, minyak kelapa, dan produk kelapa terkait. Bagi pembeli internasional, tantangannya jarang mencari pemasok — melainkan menemukan mitra yang dapat mengulang mutu, dokumen, dan jadwal stuffing yang sama di banyak pengiriman.",
+          "Mulailah dari identitas dan komunikasi. Mitra yang andal memiliki entitas hukum yang jelas, alamat kantor atau workshop, serta kontak penjualan yang merespons dalam bahasa Inggris dengan spek produk, foto packing, dan lead time yang realistis. WhatsApp lazim dalam perdagangan ini; seharusnya melengkapi — bukan menggantikan — penawaran tertulis dan packing list.",
+          "Minta rentang spesifikasi, bukan kata sifat pemasaran. Kadar air, abu, fixed carbon, nilai kalor, bentuk, packing, dan bobot muat kontainer jauh lebih informatif daripada “premium” atau “export quality.” Pastikan angka tersebut adalah grade produksi tipikal dan bagaimana pemeriksaannya sebelum stuffing.",
+          "Keandalan pasokan sama pentingnya dengan harga. Bahan baku kelapa bersifat musiman dan regional. Mitra dengan jaringan produsen di berbagai wilayah Indonesia lebih mampu menahan kekurangan lokal dibanding satu pabrik kecil. Minta foto stuffing terbaru, kebijakan sampel, dan MOQ yang jelas.",
+          "Terakhir, selaraskan pembayaran, inspeksi, dan penanganan klaim. Mitra ekspor Indonesia terbaik memperlakukan kontainer pertama sebagai awal program jangka panjang, bukan penjualan sekali jalan."
+        ]
+      }
+    },
+    {
+      "slug": "charcoal-quality-specs",
+      "image": "/images/briquettes.jpg",
+      "date": "2026-04-02",
+      "author": "Eksporin Coco",
+      "en": {
+        "title": "Coconut Charcoal Briquettes: Quality Specs That Matter for BBQ and Shisha Markets",
+        "excerpt": "Ash, moisture, burning time, and packing — the numbers buyers actually compare before placing a container.",
+        "body": [
+          "Shisha and BBQ buyers judge coconut charcoal on performance they can feel: ignition time, spark, odor, ash color, and how long a cube or hexagonal stick holds heat. Those results come from a small set of laboratory and production specs.",
+          "Ash content is usually the first filter. Lower ash means a cleaner table, fewer complaints from end users, and a more “white ash” look that many Middle East and European buyers expect. Moisture must stay low enough for stable burning and to avoid extra freight weight.",
+          "Fixed carbon and calorific value indicate energy density. Dense, well-pressed briquettes made from coconut shell charcoal typically burn longer than mixed biomass cubes. Shape and size must match the destination: 25 mm cubes for many shisha markets, hexagonal or finger shapes for BBQ.",
+          "Packing is part of the product. Inner boxes, master cartons, palletizing, and private-label printing affect both landed cost and brand presentation. Confirm pieces per box, boxes per carton, and cartons per container before you lock a price.",
+          "When you request a quote from Eksporin Coco, share your target market, preferred shape, and whether you need OEM branding. We will align typical Indonesian production grades with your application and loading plan."
+        ]
+      },
+      "id": {
+        "title": "Briket Arang Kelapa: Spek Mutu yang Penting untuk Pasar BBQ dan Shisha",
+        "excerpt": "Abu, kadar air, waktu bakar, dan packing — angka yang benar-benar dibandingkan pembeli sebelum memesan kontainer.",
+        "body": [
+          "Pembeli shisha dan BBQ menilai arang kelapa dari performa yang terasa: waktu nyala, percikan, bau, warna abu, dan berapa lama kubus atau stick heksagonal menahan panas. Hasil itu berasal dari sejumlah spek laboratorium dan produksi.",
+          "Kadar abu biasanya menjadi filter pertama. Abu lebih rendah berarti meja lebih bersih, lebih sedikit keluhan pengguna, dan tampilan “white ash” yang diharapkan banyak pembeli Timur Tengah dan Eropa. Kadar air harus cukup rendah agar pembakaran stabil dan tidak menambah bobot angkut.",
+          "Fixed carbon dan nilai kalor menunjukkan kepadatan energi. Briket padat dari arang tempurung kelapa biasanya terbakar lebih lama daripada kubus biomassa campuran. Bentuk dan ukuran harus sesuai tujuan: kubus 25 mm untuk banyak pasar shisha, heksagonal atau finger untuk BBQ.",
+          "Packing adalah bagian dari produk. Inner box, master carton, palet, dan cetakan private label memengaruhi landed cost sekaligus presentasi merek. Pastikan jumlah pieces per box, box per karton, dan karton per kontainer sebelum mengunci harga.",
+          "Saat meminta penawaran ke Eksporin Coco, sampaikan pasar tujuan, bentuk yang diinginkan, dan apakah Anda membutuhkan merek OEM. Kami akan menyesuaikan grade produksi Indonesia yang tipikal dengan aplikasi dan rencana stuffing Anda."
+        ]
+      }
+    },
+    {
+      "slug": "shell-to-container",
+      "image": "/images/production.jpg",
+      "date": "2026-05-18",
+      "author": "Eksporin Coco",
+      "en": {
+        "title": "From Coconut Shell to Export Container: How Indonesian Charcoal Supply Works",
+        "excerpt": "A short tour of sourcing, carbonization, packing, and stuffing for coconut-based charcoal exports.",
+        "body": [
+          "Coconut shell charcoal starts as a by-product of copra and coconut processing. Shells are collected from mills and farms, dried, then carbonized in kilns. The resulting lump charcoal can be sold as-is or crushed, mixed with a food-grade binder, and pressed into briquettes.",
+          "Quality control happens in layers: raw shell selection, kiln temperature and time, cooling, screening, moisture checks, and — for briquettes — mixing ratios and drying after pressing. Skipping any of these steps shows up later as sparks, odor, fast burn, or high ash.",
+          "Export packing is planned around the buyer’s market. Hookah cubes often go into printed inner boxes and master cartons; industrial lump charcoal may ship in PP or jumbo bags. Photos of packing and stuffing protect both sides if a claim arises after arrival.",
+          "A 20 ft or 40 ft container is the usual commercial unit. Loading weights depend on shape, packing, and whether pallets are used. Freight, inspection, and document timing should be agreed together with production lead time.",
+          "Eksporin Coco connects this chain — local producers across Indonesia, export packing, and buyer communication — so importers can focus on their market rather than coordinating every village supplier themselves."
+        ]
+      },
+      "id": {
+        "title": "Dari Tempurung Kelapa ke Kontainer Ekspor: Cara Kerja Pasokan Arang Indonesia",
+        "excerpt": "Tur singkat tentang sourcing, karbonisasi, packing, dan stuffing untuk ekspor arang berbasis kelapa.",
+        "body": [
+          "Arang tempurung kelapa berawal sebagai produk samping pengolahan kopra dan kelapa. Tempurung dikumpulkan dari pabrik dan petani, dikeringkan, lalu dikarbonisasi di kiln. Arang bongkah hasilnya dapat dijual apa adanya atau dihancurkan, dicampur binder food-grade, dan dicetak menjadi briket.",
+          "Pengendalian mutu terjadi berlapis: seleksi tempurung, suhu dan waktu kiln, pendinginan, ayakan, cek kadar air, dan — untuk briket — rasio campuran serta pengeringan setelah cetak. Melewatkan salah satu langkah akan muncul kemudian sebagai percikan, bau, bakar cepat, atau abu tinggi.",
+          "Packing ekspor direncanakan sesuai pasar pembeli. Kubus shisha sering masuk inner box tercetak dan master carton; arang bongkah industri dapat dikirim dalam karung PP atau jumbo bag. Foto packing dan stuffing melindungi kedua pihak jika ada klaim setelah tiba.",
+          "Kontainer 20 ft atau 40 ft adalah satuan komersial yang lazim. Bobot muat bergantung pada bentuk, packing, dan apakah memakai palet. Freight, inspeksi, dan waktu dokumen harus disepakati bersama lead time produksi.",
+          "Eksporin Coco menghubungkan rantai ini — produsen lokal di Indonesia, packing ekspor, dan komunikasi pembeli — agar importir dapat fokus pada pasarnya, bukan mengoordinasikan setiap pemasok desa sendiri."
+        ]
+      }
+    }
+  ],
+  "markets": [
+    {
+      "code": "IN",
+      "name": "India",
+      "nameId": "India",
+      "flag": "🇮🇳"
+    },
+    {
+      "code": "VN",
+      "name": "Vietnam",
+      "nameId": "Vietnam",
+      "flag": "🇻🇳"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "nameId": "Korea Selatan",
+      "flag": "🇰🇷"
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "nameId": "Thailand",
+      "flag": "🇹🇭"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "nameId": "Kanada",
+      "flag": "🇨🇦"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "nameId": "Singapura",
+      "flag": "🇸🇬"
+    }
+  ],
+  "inquiryCountries": [
+    "India",
+    "Vietnam",
+    "South Korea",
+    "Thailand",
+    "Canada",
+    "Singapore",
+    "United Arab Emirates",
+    "Saudi Arabia",
+    "United States",
+    "Japan",
+    "Malaysia",
+    "Germany",
+    "China",
+    "Other"
+  ],
+  "portfolioPreviewImages": [
+    "/images/production.jpg",
+    "/images/shipment.jpg",
+    "/images/clients.jpg"
+  ],
+  "portfolioGallery": [
+    {
+      "src": "/images/production.jpg",
+      "titleEn": "Production & packing",
+      "titleId": "Produksi & packing"
+    },
+    {
+      "src": "/images/kiln.jpg",
+      "titleEn": "Carbonization",
+      "titleId": "Karbonisasi"
+    },
+    {
+      "src": "/images/shipment.jpg",
+      "titleEn": "Port & stuffing",
+      "titleId": "Pelabuhan & stuffing"
+    },
+    {
+      "src": "/images/ship.jpg",
+      "titleEn": "Sea-route export",
+      "titleId": "Ekspor jalur laut"
+    },
+    {
+      "src": "/images/containers.jpg",
+      "titleEn": "Container handling",
+      "titleId": "Penanganan kontainer"
+    },
+    {
+      "src": "/images/clients.jpg",
+      "titleEn": "Buyer meetings",
+      "titleId": "Pertemuan pembeli"
+    }
+  ]
+}

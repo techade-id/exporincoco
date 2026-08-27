@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { site, whatsappLinks } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { whatsappLinks } from "@/lib/site";
 
 type InquiryBody = {
   name?: string;
@@ -33,6 +34,8 @@ export async function POST(request: Request) {
     `Message: ${message}`,
   ].join("\n");
 
+  const content = await getContent();
+  const site = content.site;
   const subject = `Inquiry from ${name}${body.product ? ` — ${body.product}` : ""}`;
   const to = process.env.INQUIRY_TO || site.email;
 
@@ -73,6 +76,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    whatsappUrls: whatsappLinks(text),
+    whatsappUrls: whatsappLinks(text, site.whatsappNumbers),
   });
 }

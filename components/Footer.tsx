@@ -1,29 +1,48 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { InquiryForm } from "@/components/InquiryForm";
 import { Logo } from "@/components/Logo";
+import { MediaImage } from "@/components/MediaImage";
 import { IconMail, IconPin, IconWhatsApp } from "@/components/icons";
-import { t } from "@/lib/i18n";
-import { site, type Locale } from "@/lib/site";
+import type { LocaleCopy, ProductItem, SiteImages, SiteInfo } from "@/lib/content-types";
+import type { Locale } from "@/lib/site";
 
-function SocialLinks({ label }: { label: string }) {
+function SocialLinks({
+  label,
+  social,
+}: {
+  label: string;
+  social: SiteInfo["social"];
+}) {
   return (
     <div>
       <p className="mb-3 text-sm font-medium">{label}</p>
       <div className="flex gap-3 text-xs text-white/70">
-        <a href={site.social.instagram} target="_blank" rel="noreferrer">Instagram</a>
-        <a href={site.social.facebook} target="_blank" rel="noreferrer">Facebook</a>
-        <a href={site.social.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href={site.social.tiktok} target="_blank" rel="noreferrer">TikTok</a>
+        <a href={social.instagram} target="_blank" rel="noreferrer">Instagram</a>
+        <a href={social.facebook} target="_blank" rel="noreferrer">Facebook</a>
+        <a href={social.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href={social.tiktok} target="_blank" rel="noreferrer">TikTok</a>
       </div>
     </div>
   );
 }
 
-export function Footer({ locale }: { locale: Locale }) {
-  const copy = t(locale);
+export function Footer({
+  locale,
+  copy,
+  site,
+  products,
+  countries,
+  images,
+}: {
+  locale: Locale;
+  copy: LocaleCopy;
+  site: SiteInfo;
+  products: ProductItem[];
+  countries: string[];
+  images: SiteImages;
+}) {
   const pathname = usePathname();
   const onContact = pathname?.includes("/contact");
   const mapsSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapsQuery)}&output=embed`;
@@ -36,7 +55,7 @@ export function Footer({ locale }: { locale: Locale }) {
         }`}
       >
         <div className="space-y-5">
-          <Logo locale={locale} light />
+          <Logo locale={locale} light logo={images.logo} logoLight={images.logoLight} />
           {onContact ? null : (
             <div className="space-y-3 text-sm text-white/75">
               <p className="flex gap-3">
@@ -61,15 +80,15 @@ export function Footer({ locale }: { locale: Locale }) {
               </p>
             </div>
           )}
-          {onContact ? null : <SocialLinks label={copy.contact.follow} />}
+          {onContact ? null : <SocialLinks label={copy.contact.follow} social={site.social} />}
         </div>
         {onContact ? (
-          <SocialLinks label={copy.contact.follow} />
+          <SocialLinks label={copy.contact.follow} social={site.social} />
         ) : (
           <>
             <div className="relative hidden min-h-[240px] overflow-hidden rounded-xl bg-white/5 lg:block">
-              <Image
-                src="/images/ship.jpg"
+              <MediaImage
+                src={images.footerMap}
                 alt="Global export routes"
                 fill
                 className="object-cover opacity-40"
@@ -85,7 +104,14 @@ export function Footer({ locale }: { locale: Locale }) {
             </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">{copy.footer.inquiry}</h3>
-              <InquiryForm locale={locale} compact />
+              <InquiryForm
+                locale={locale}
+                copy={copy}
+                products={products}
+                countries={countries}
+                numbers={site.whatsappNumbers}
+                compact
+              />
             </div>
           </>
         )}

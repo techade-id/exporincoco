@@ -1,12 +1,15 @@
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
-import { inquiryCountries, whatsappLinks, type Locale } from "@/lib/site";
-import { t } from "@/lib/i18n";
-import { products } from "@/lib/products";
+import type { LocaleCopy, ProductItem } from "@/lib/content-types";
+import { whatsappLinks, type Locale } from "@/lib/site";
 
 type InquiryFormProps = {
   locale: Locale;
+  copy: LocaleCopy;
+  products: ProductItem[];
+  countries: string[];
+  numbers: { display: string; wa: string }[];
   compact?: boolean;
   defaultProduct?: string;
 };
@@ -17,8 +20,15 @@ type WhatsAppLink = {
   href: string;
 };
 
-export function InquiryForm({ locale, compact = false, defaultProduct = "" }: InquiryFormProps) {
-  const copy = t(locale);
+export function InquiryForm({
+  locale,
+  copy,
+  products,
+  countries,
+  numbers,
+  compact = false,
+  defaultProduct = "",
+}: InquiryFormProps) {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [waLinks, setWaLinks] = useState<WhatsAppLink[]>([]);
 
@@ -28,7 +38,7 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
         slug: product.slug,
         name: product[locale].name,
       })),
-    [locale],
+    [locale, products],
   );
 
   function inquiryText(payload: {
@@ -83,7 +93,7 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
     }
 
     setStatus("sending");
-    const fallbackLinks = whatsappLinks(inquiryText(payload));
+    const fallbackLinks = whatsappLinks(inquiryText(payload), numbers);
     try {
       const response = await fetch("/api/inquiry", {
         method: "POST",
@@ -123,7 +133,7 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
             <option value="" disabled>
               {copy.contact.countryPlaceholder}
             </option>
-            {inquiryCountries.map((country) => (
+            {countries.map((country) => (
               <option key={country} value={country}>
                 {country}
               </option>

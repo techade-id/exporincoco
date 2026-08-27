@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { InquiryForm } from "@/components/InquiryForm";
 import { IconMail, IconPin, IconWhatsApp } from "@/components/icons";
-import { t } from "@/lib/i18n";
-import { isLocale, localizedPath, site, type Locale } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -12,8 +12,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
+  const content = await getContent();
   return {
-    title: t(locale).nav.contact,
+    title: content.dictionary[locale].nav.contact,
     alternates: { canonical: localizedPath(locale, "/contact") },
   };
 }
@@ -26,7 +27,9 @@ export default async function ContactPage({
   const { locale: raw } = await params;
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const content = await getContent();
+  const copy = content.dictionary[locale];
+  const { site } = content;
   const mapsSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.address.mapsQuery)}&output=embed`;
 
   return (
@@ -88,7 +91,13 @@ export default async function ContactPage({
         </div>
         <div className="rounded-2xl bg-band p-6 sm:p-8">
           <h2 className="mb-5 text-xl font-semibold text-white">{copy.contact.formTitle}</h2>
-          <InquiryForm locale={locale} />
+          <InquiryForm
+            locale={locale}
+            copy={copy}
+            products={content.products}
+            countries={content.inquiryCountries}
+            numbers={site.whatsappNumbers}
+          />
         </div>
       </section>
     </>

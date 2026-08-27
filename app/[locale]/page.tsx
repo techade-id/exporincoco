@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/CtaBanner";
+import { MediaImage } from "@/components/MediaImage";
 import {
   IconQuote,
   IconShield,
@@ -10,10 +10,8 @@ import {
   IconTag,
   IconTruck,
 } from "@/components/icons";
-import { posts } from "@/lib/blog";
-import { t } from "@/lib/i18n";
-import { products } from "@/lib/products";
-import { isLocale, localizedPath, markets, site, type Locale } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -22,9 +20,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
+  const content = await getContent();
   return {
     title: "Home",
-    description: t(locale).hero.title,
+    description: content.dictionary[locale].hero.title,
     alternates: {
       canonical: localizedPath(locale),
       languages: { en: "/en", id: "/id" },
@@ -33,11 +32,6 @@ export async function generateMetadata({
 }
 
 const valueIcons = [IconShip, IconShield, IconTruck, IconTag];
-const portfolioImages = [
-  "/images/production.jpg",
-  "/images/shipment.jpg",
-  "/images/clients.jpg",
-];
 
 export default async function HomePage({
   params,
@@ -47,13 +41,15 @@ export default async function HomePage({
   const { locale: raw } = await params;
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const content = await getContent();
+  const copy = content.dictionary[locale];
+  const { site } = content;
 
   return (
     <>
       <section className="relative isolate min-h-[78vh] overflow-hidden">
-        <Image
-          src="/images/hero.jpg"
+        <MediaImage
+          src={content.images.hero}
           alt="Glowing coconut charcoal briquettes"
           fill
           priority
@@ -85,9 +81,9 @@ export default async function HomePage({
       <section className="bg-surface">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
           {copy.values.map((value, index) => {
-            const Icon = valueIcons[index];
+            const Icon = valueIcons[index] ?? IconShip;
             return (
-              <div key={value.title} className="flex gap-3">
+              <div key={`${value.title}-${index}`} className="flex gap-3">
                 <Icon className="mt-0.5 h-8 w-8 shrink-0 text-orange" />
                 <div>
                   <h3 className="font-semibold text-ink">{value.title}</h3>
@@ -113,8 +109,8 @@ export default async function HomePage({
           </Link>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-          <Image
-            src="/images/containers.jpg"
+          <MediaImage
+            src={content.images.homeAbout}
             alt="Export containers ready for shipment"
             fill
             className="object-cover"
@@ -127,13 +123,13 @@ export default async function HomePage({
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-semibold text-orange">{copy.products.title}</h2>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
+            {content.products.map((product) => (
               <Link
                 key={product.slug}
                 href={localizedPath(locale, `/products/${product.slug}`)}
                 className="group relative block aspect-[4/3] overflow-hidden rounded-xl"
               >
-                <Image
+                <MediaImage
                   src={product.image}
                   alt={product[locale].name}
                   fill
@@ -156,9 +152,15 @@ export default async function HomePage({
         <h2 className="mt-2 text-center text-3xl font-semibold text-ink">{copy.portfolio.title}</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {copy.portfolio.items.map((item, index) => (
-            <article key={item.title} className="overflow-hidden rounded-xl bg-surface">
+            <article key={`${item.title}-${index}`} className="overflow-hidden rounded-xl bg-surface">
               <div className="relative aspect-[16/10]">
-                <Image src={portfolioImages[index]} alt={item.title} fill className="object-cover" sizes="33vw" />
+                <MediaImage
+                  src={content.portfolioPreviewImages[index] || content.images.homeAbout}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                  sizes="33vw"
+                />
               </div>
               <div className="p-5">
                 <h3 className="font-semibold">{item.title}</h3>
@@ -181,7 +183,7 @@ export default async function HomePage({
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-3xl font-semibold text-ink">{copy.markets.title}</h2>
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {markets.map((market) => (
+            {content.markets.map((market) => (
               <div key={market.code} className="rounded-xl bg-card px-3 py-5 text-center shadow-sm">
                 <div className="text-3xl">{market.flag}</div>
                 <p className="mt-2 text-sm font-medium">{locale === "id" ? market.nameId : market.name}</p>
@@ -218,10 +220,10 @@ export default async function HomePage({
         <div className="mx-auto max-w-6xl">
           <h2 className="text-3xl font-semibold text-orange">{copy.blog.title}</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
-            {posts.slice(0, 2).map((post) => (
+            {content.posts.slice(0, 2).map((post) => (
               <article key={post.slug} className="overflow-hidden rounded-xl border border-line">
                 <div className="relative aspect-[16/9]">
-                  <Image src={post.image} alt={post[locale].title} fill className="object-cover" sizes="50vw" />
+                  <MediaImage src={post.image} alt={post[locale].title} fill className="object-cover" sizes="50vw" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold">{post[locale].title}</h3>

@@ -2,13 +2,16 @@
 
 import { IconMoon, IconSun } from "@/components/icons";
 import { useTheme } from "@/components/ThemeProvider";
-import { t } from "@/lib/i18n";
-import type { Locale } from "@/lib/site";
 
-export function ThemeToggle({ locale }: { locale: Locale }) {
+export function ThemeToggle({
+  lightLabel,
+  darkLabel,
+}: {
+  lightLabel: string;
+  darkLabel: string;
+}) {
   const { theme, toggleTheme } = useTheme();
-  const copy = t(locale);
-  const label = theme === "dark" ? copy.theme.light : copy.theme.dark;
+  const label = theme === "dark" ? lightLabel : darkLabel;
 
   return (
     <button

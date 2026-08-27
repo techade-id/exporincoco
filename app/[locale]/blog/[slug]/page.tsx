@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/CtaBanner";
-import { getPost, posts } from "@/lib/blog";
-import { t } from "@/lib/i18n";
-import { isLocale, locales, localizedPath, type Locale } from "@/lib/site";
+import { MediaImage } from "@/components/MediaImage";
+import { getContent } from "@/lib/content";
+import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
-export function generateStaticParams() {
-  return locales.flatMap((locale) => posts.map((post) => ({ locale, slug: post.slug })));
-}
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -16,7 +13,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getPost(slug);
+  const content = await getContent();
+  const post = content.posts.find((item) => item.slug === slug);
   if (!isLocale(locale) || !post) return {};
   return {
     title: post[locale].title,
@@ -32,10 +30,11 @@ export default async function BlogPostPage({
 }) {
   const { locale: raw, slug } = await params;
   if (!isLocale(raw)) notFound();
-  const post = getPost(slug);
+  const content = await getContent();
+  const post = content.posts.find((item) => item.slug === slug);
   if (!post) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const copy = content.dictionary[locale];
 
   return (
     <>
@@ -45,11 +44,11 @@ export default async function BlogPostPage({
         </p>
         <h1 className="mt-3 text-4xl font-bold leading-tight">{post[locale].title}</h1>
         <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-2xl">
-          <Image src={post.image} alt={post[locale].title} fill className="object-cover" sizes="768px" priority />
+          <MediaImage src={post.image} alt={post[locale].title} fill className="object-cover" sizes="768px" priority />
         </div>
         <div className="mt-8 space-y-5 text-[17px] leading-8 text-muted">
-          {post[locale].body.map((paragraph) => (
-            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+          {post[locale].body.map((paragraph, index) => (
+            <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
           ))}
         </div>
       </article>

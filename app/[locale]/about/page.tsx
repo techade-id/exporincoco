@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/CtaBanner";
 import { IndonesiaMap } from "@/components/IndonesiaMap";
+import { MediaImage } from "@/components/MediaImage";
 import { IconEye, IconLeaf, IconPin, IconShield, IconTarget, IconTruck } from "@/components/icons";
-import { t } from "@/lib/i18n";
+import { getContent } from "@/lib/content";
 import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
 export async function generateMetadata({
@@ -14,8 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
+  const content = await getContent();
   return {
-    title: t(locale).nav.about,
+    title: content.dictionary[locale].nav.about,
     alternates: { canonical: localizedPath(locale, "/about") },
   };
 }
@@ -28,13 +29,14 @@ export default async function AboutPage({
   const { locale: raw } = await params;
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const content = await getContent();
+  const copy = content.dictionary[locale];
 
   return (
     <>
       <section className="relative isolate overflow-hidden bg-band">
-        <Image
-          src="/images/about-hero.jpg"
+        <MediaImage
+          src={content.images.aboutHero}
           alt="Burning charcoal"
           fill
           className="object-cover opacity-40"
@@ -50,8 +52,8 @@ export default async function AboutPage({
 
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-          <Image
-            src="/images/containers.jpg"
+          <MediaImage
+            src={content.images.about}
             alt="Port operations"
             fill
             className="object-cover"
@@ -84,9 +86,9 @@ export default async function AboutPage({
               <h3 className="text-xl font-semibold">{copy.mission.valuesTitle}</h3>
               <ul className="mt-5 space-y-4">
                 {copy.mission.values.map((value, index) => {
-                  const Icon = [IconShield, IconTruck, IconTarget][index];
+                  const Icon = [IconShield, IconTruck, IconTarget][index] ?? IconShield;
                   return (
-                    <li key={value.title} className="flex gap-3">
+                    <li key={`${value.title}-${index}`} className="flex gap-3">
                       <Icon className="mt-0.5 h-5 w-5 shrink-0 text-orange" />
                       <div>
                         <p className="font-medium">{value.title}</p>

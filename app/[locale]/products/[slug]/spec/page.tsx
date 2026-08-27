@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PrintButton } from "@/components/PrintButton";
-import { t } from "@/lib/i18n";
-import { getProduct, products } from "@/lib/products";
-import { isLocale, locales, site, type Locale } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { isLocale, type Locale } from "@/lib/site";
 
-export function generateStaticParams() {
-  return locales.flatMap((locale) =>
-    products.map((product) => ({ locale, slug: product.slug })),
-  );
-}
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -17,7 +12,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const product = getProduct(slug);
+  const content = await getContent();
+  const product = content.products.find((item) => item.slug === slug);
   if (!isLocale(locale) || !product) return {};
   return { title: `${product[locale].name} spec sheet` };
 }
@@ -29,10 +25,12 @@ export default async function SpecSheetPage({
 }) {
   const { locale: raw, slug } = await params;
   if (!isLocale(raw)) notFound();
-  const product = getProduct(slug);
+  const content = await getContent();
+  const product = content.products.find((item) => item.slug === slug);
   if (!product) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const copy = content.dictionary[locale];
+  const { site } = content;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6">

@@ -3,45 +3,48 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { site } from "@/lib/site";
+import { getContent } from "@/lib/content";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://eksporincoco.com"),
-  title: {
-    default: `${site.name} | Indonesian Coconut Charcoal Exporter`,
-    template: `%s | ${site.name}`,
-  },
-  description:
-    "Eksporin Coco, powered by PT Ekspor Indonesia Aja, is an Indonesian supplier and exporter of coconut charcoal briquettes, copra, coconut oil, coconut shell charcoal, and wood charcoal.",
-  keywords: [
-    "Indonesia charcoal briquette exporter",
-    "coconut charcoal briquettes",
-    "coconut shell charcoal",
-    "copra exporter Indonesia",
-    "Eksporin Coco",
-    "PT Ekspor Indonesia Aja",
-  ],
-  icons: {
-    icon: [
-      { url: "/icon.png?v=3", type: "image/png", sizes: "512x512" },
-      { url: "/favicon.ico?v=3", type: "image/x-icon" },
-    ],
-    apple: [{ url: "/apple-icon.png?v=3" }],
-  },
-  openGraph: {
-    title: `${site.name} | Indonesian Coconut Charcoal Exporter`,
+export async function generateMetadata(): Promise<Metadata> {
+  const { site } = await getContent();
+  return {
+    metadataBase: new URL("https://eksporincoco.com"),
+    title: {
+      default: `${site.name} | Indonesian Coconut Charcoal Exporter`,
+      template: `%s | ${site.name}`,
+    },
     description:
-      "Trusted Indonesian exporter of coconut charcoal briquettes and coconut-based products.",
-    siteName: site.name,
-    locale: "en_US",
-    type: "website",
-  },
-};
+      "Eksporin Coco, powered by PT Ekspor Indonesia Aja, is an Indonesian supplier and exporter of coconut charcoal briquettes, copra, coconut oil, coconut shell charcoal, and wood charcoal.",
+    keywords: [
+      "Indonesia charcoal briquette exporter",
+      "coconut charcoal briquettes",
+      "coconut shell charcoal",
+      "copra exporter Indonesia",
+      "Eksporin Coco",
+      "PT Ekspor Indonesia Aja",
+    ],
+    icons: {
+      icon: [
+        { url: "/icon.png?v=3", type: "image/png", sizes: "512x512" },
+        { url: "/favicon.ico?v=3", type: "image/x-icon" },
+      ],
+      apple: [{ url: "/apple-icon.png?v=3" }],
+    },
+    openGraph: {
+      title: `${site.name} | Indonesian Coconut Charcoal Exporter`,
+      description:
+        "Trusted Indonesian exporter of coconut charcoal briquettes and coconut-based products.",
+      siteName: site.name,
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { posts } from "@/lib/blog";
-import { products } from "@/lib/products";
+import { getContent } from "@/lib/content";
 import { locales } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://eksporincoco.vercel.app";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const content = await getContent();
+  const base = "https://eksporincoco.com";
   const paths = [
     "",
     "/about",
@@ -12,8 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/portfolio",
     "/blog",
     "/contact",
-    ...products.map((product) => `/products/${product.slug}`),
-    ...posts.map((post) => `/blog/${post.slug}`),
+    ...content.products.map((product) => `/products/${product.slug}`),
+    ...content.posts.map((post) => `/blog/${post.slug}`),
   ];
 
   return locales.flatMap((locale) =>

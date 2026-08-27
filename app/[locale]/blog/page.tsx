@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { posts } from "@/lib/blog";
-import { t } from "@/lib/i18n";
+import { MediaImage } from "@/components/MediaImage";
+import { getContent } from "@/lib/content";
 import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
 export async function generateMetadata({
@@ -13,8 +12,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
+  const content = await getContent();
   return {
-    title: t(locale).nav.blog,
+    title: content.dictionary[locale].nav.blog,
     alternates: { canonical: localizedPath(locale, "/blog") },
   };
 }
@@ -27,7 +27,8 @@ export default async function BlogPage({
   const { locale: raw } = await params;
   if (!isLocale(raw)) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
+  const content = await getContent();
+  const copy = content.dictionary[locale];
 
   return (
     <>
@@ -37,10 +38,10 @@ export default async function BlogPage({
         </div>
       </section>
       <section className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
+        {content.posts.map((post) => (
           <article key={post.slug} className="overflow-hidden rounded-xl border border-line">
             <div className="relative aspect-[16/10]">
-              <Image src={post.image} alt={post[locale].title} fill className="object-cover" sizes="33vw" />
+              <MediaImage src={post.image} alt={post[locale].title} fill className="object-cover" sizes="33vw" />
             </div>
             <div className="p-5">
               <h2 className="text-lg font-semibold">{post[locale].title}</h2>

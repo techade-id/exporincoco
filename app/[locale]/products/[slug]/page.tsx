@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/CtaBanner";
+import { MediaImage } from "@/components/MediaImage";
 import { IconPdf } from "@/components/icons";
-import { t } from "@/lib/i18n";
-import { getProduct, products, relatedProducts } from "@/lib/products";
-import { isLocale, locales, localizedPath, type Locale } from "@/lib/site";
+import { getContent } from "@/lib/content";
+import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
-export function generateStaticParams() {
-  return locales.flatMap((locale) =>
-    products.map((product) => ({ locale, slug: product.slug })),
-  );
-}
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -20,7 +15,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const product = getProduct(slug);
+  const content = await getContent();
+  const product = content.products.find((item) => item.slug === slug);
   if (!isLocale(locale) || !product) return {};
   return {
     title: product[locale].name,
@@ -36,11 +32,12 @@ export default async function ProductPage({
 }) {
   const { locale: raw, slug } = await params;
   if (!isLocale(raw)) notFound();
-  const product = getProduct(slug);
+  const content = await getContent();
+  const product = content.products.find((item) => item.slug === slug);
   if (!product) notFound();
   const locale = raw as Locale;
-  const copy = t(locale);
-  const related = relatedProducts(product.slug);
+  const copy = content.dictionary[locale];
+  const related = content.products.filter((item) => item.slug !== product.slug).slice(0, 3);
 
   return (
     <>
@@ -52,7 +49,7 @@ export default async function ProductPage({
       <section className="mx-auto grid max-w-6xl items-start gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-            <Image
+            <MediaImage
               src={product.image}
               alt={product[locale].name}
               fill
@@ -104,7 +101,7 @@ export default async function ProductPage({
           {related.map((item) => (
             <article key={item.slug} className="overflow-hidden rounded-xl border border-line">
               <div className="relative aspect-[16/10]">
-                <Image src={item.image} alt={item[locale].name} fill className="object-cover" sizes="33vw" />
+                <MediaImage src={item.image} alt={item[locale].name} fill className="object-cover" sizes="33vw" />
               </div>
               <div className="p-5">
                 <h3 className="font-semibold">{item[locale].name}</h3>

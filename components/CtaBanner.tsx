@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { IconHeadset } from "@/components/icons";
-import { t } from "@/lib/i18n";
+import { getContent } from "@/lib/content";
 import { localizedPath, type Locale } from "@/lib/site";
 
-export function CtaBanner({ locale }: { locale: Locale }) {
-  const copy = t(locale);
+export async function CtaBanner({ locale }: { locale: Locale }) {
+  const content = await getContent();
+  const copy = content.dictionary[locale];
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <div className="flex flex-col items-start gap-6 rounded-2xl bg-surface px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-10">

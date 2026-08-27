@@ -2,14 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { IconWhatsApp } from "@/components/icons";
-import { t } from "@/lib/i18n";
-import { type Locale, whatsappLinks } from "@/lib/site";
+import { whatsappLinks } from "@/lib/site";
 
-export function WhatsAppButton({ locale }: { locale: Locale }) {
-  const copy = t(locale);
+export function WhatsAppButton({
+  label,
+  choose,
+  message,
+  numbers,
+}: {
+  label: string;
+  choose: string;
+  message: string;
+  numbers: { display: string; wa: string }[];
+}) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
-  const links = whatsappLinks(copy.wa.defaultMessage);
+  const links = whatsappLinks(message, numbers);
 
   useEffect(() => {
     function onPointerDown(event: PointerEvent) {
@@ -26,7 +34,7 @@ export function WhatsAppButton({ locale }: { locale: Locale }) {
       {open ? (
         <div className="mb-3 w-56 overflow-hidden rounded-2xl bg-white text-neutral-900 shadow-xl ring-1 ring-black/10 dark:bg-card dark:text-ink dark:ring-white/10">
           <p className="border-b border-line px-4 py-2 text-xs font-medium text-muted">
-            {copy.wa.choose}
+            {choose}
           </p>
           <div className="flex flex-col">
             {links.map((link) => (
@@ -47,7 +55,7 @@ export function WhatsAppButton({ locale }: { locale: Locale }) {
       ) : null}
       <button
         type="button"
-        aria-label={copy.wa.label}
+        aria-label={label}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
         className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"

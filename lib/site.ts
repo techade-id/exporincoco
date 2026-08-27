@@ -70,8 +70,11 @@ export function whatsappUrl(message?: string, wa: string = site.whatsapp) {
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
-export function whatsappLinks(message?: string) {
-  return site.whatsappNumbers.map((number) => ({
+export function whatsappLinks(
+  message?: string,
+  numbers: { display: string; wa: string }[] = [...site.whatsappNumbers],
+) {
+  return numbers.map((number) => ({
     ...number,
     href: whatsappUrl(message, number.wa),
   }));
