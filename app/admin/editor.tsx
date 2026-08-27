@@ -68,7 +68,7 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
       return;
     }
     setContent(json.content);
-    setStatus(`Saved. English hero is now: “${json.content.dictionary.en.hero.title}”`);
+    setStatus("Saved.");
   }
 
   async function logout() {
