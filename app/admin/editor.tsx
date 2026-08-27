@@ -1,7 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useId, useState } from "react";
 import { slugify, type Content, type GalleryItem, type PostItem, type ProductItem } from "@/lib/content-types";
+
+type EditorLang = "en" | "id";
+
+const LangContext = createContext<{ lang: EditorLang; setLang: (lang: EditorLang) => void }>({
+  lang: "en",
+  setLang: () => undefined,
+});
+
+function useLang() {
+  return useContext(LangContext);
+}
 
 type Section =
   | "site"
@@ -32,6 +43,7 @@ const inputClass =
 export function Editor({ initial, persist }: { initial: Content; persist: "file" | "github" | "blob" }) {
   const [content, setContent] = useState(initial);
   const [section, setSection] = useState<Section>("site");
+  const [lang, setLang] = useState<EditorLang>("en");
   const [status, setStatus] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -58,69 +70,82 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
   }
 
   return (
-    <div className="mx-auto flex min-h-full max-w-6xl flex-col md:flex-row">
-      <aside className="border-b border-white/10 p-4 md:w-56 md:border-r md:border-b-0">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-orange">Editorial</p>
-        <nav className="mt-4 grid grid-cols-2 gap-1 md:grid-cols-1">
-          {sections.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setSection(item.id)}
-              className={`rounded-md px-3 py-2 text-left text-sm ${
-                section === item.id ? "bg-orange text-white" : "text-white/75 hover:bg-white/5"
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-        <div className="mt-6 space-y-2 text-xs text-white/50">
-          <p>
-            Storage:{" "}
-            {persist === "blob"
-              ? "Vercel Blob (uploads stay live)"
-              : persist === "github"
-                ? "GitHub (keeps edits live)"
-                : "this server only"}
-          </p>
-          {persist === "file" ? (
-            <p>Add a Vercel Blob store so image uploads survive deploys.</p>
-          ) : null}
-        </div>
-      </aside>
-      <div className="flex-1 p-4 sm:p-6">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-semibold">{sections.find((item) => item.id === section)?.label}</h1>
-          <div className="flex gap-2">
-            <a href="/en" target="_blank" rel="noreferrer" className="rounded-md border border-white/15 px-3 py-2 text-sm">
-              View site
-            </a>
-            <button type="button" onClick={logout} className="rounded-md border border-white/15 px-3 py-2 text-sm">
-              Log out
-            </button>
-            <button
-              type="button"
-              onClick={save}
-              disabled={saving}
-              className="rounded-md bg-orange px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
-            >
-              {saving ? "Saving…" : "Save changes"}
-            </button>
+    <LangContext.Provider value={{ lang, setLang }}>
+      <div className="mx-auto flex min-h-full max-w-6xl flex-col md:flex-row">
+        <aside className="border-b border-white/10 p-4 md:w-56 md:shrink-0 md:border-r md:border-b-0">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-orange">Editorial</p>
+          <nav className="mt-4 grid grid-cols-2 gap-1 md:grid-cols-1">
+            {sections.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setSection(item.id)}
+                className={`rounded-lg px-3 py-2 text-left text-sm ${
+                  section === item.id ? "bg-orange text-white" : "text-white/75 hover:bg-white/5"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="mt-6 space-y-2 text-xs text-white/50">
+            <p>
+              Storage:{" "}
+              {persist === "blob"
+                ? "Vercel Blob (uploads stay live)"
+                : persist === "github"
+                  ? "GitHub (keeps edits live)"
+                  : "this server only"}
+            </p>
+            {persist === "file" ? (
+              <p>Add a Vercel Blob store so image uploads survive deploys.</p>
+            ) : null}
           </div>
+        </aside>
+        <div className="flex-1 p-4 sm:p-6">
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h1 className="text-xl font-semibold">{sections.find((item) => item.id === section)?.label}</h1>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="flex items-center gap-2 rounded-lg border border-white/15 bg-[#1c1c1c] px-3 py-2 text-sm">
+                <span className="text-white/50">Language</span>
+                <select
+                  value={lang}
+                  onChange={(event) => setLang(event.target.value as EditorLang)}
+                  className="bg-transparent text-white outline-none"
+                >
+                  <option value="en">English (US)</option>
+                  <option value="id">Indonesia (ID)</option>
+                </select>
+              </label>
+              <a href={lang === "id" ? "/id" : "/en"} target="_blank" rel="noreferrer" className="rounded-lg border border-white/15 px-3 py-2 text-sm">
+                View site
+              </a>
+              <button type="button" onClick={logout} className="rounded-lg border border-white/15 px-3 py-2 text-sm">
+                Log out
+              </button>
+              <button
+                type="button"
+                onClick={save}
+                disabled={saving}
+                className="rounded-lg bg-orange px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+              >
+                {saving ? "Saving…" : "Save changes"}
+              </button>
+            </div>
+          </div>
+          {status ? <p className="mb-4 text-sm text-orange">{status}</p> : null}
+          {section === "site" ? <SiteFields content={content} setContent={setContent} /> : null}
+          {section === "menu" ? <MenuFields content={content} setContent={setContent} /> : null}
+          {section === "home" ? <HomeFields content={content} setContent={setContent} /> : null}
+          {section === "about" ? <AboutFields content={content} setContent={setContent} /> : null}
+          {section === "products" ? <ProductFields content={content} setContent={setContent} /> : null}
+          {section === "portfolio" ? <PortfolioFields content={content} setContent={setContent} /> : null}
+          {section === "blog" ? <BlogFields content={content} setContent={setContent} /> : null}
+          {section === "contact" ? <ContactFields content={content} setContent={setContent} /> : null}
+          {section === "images" ? <ImageFields content={content} setContent={setContent} /> : null}
         </div>
-        {status ? <p className="mb-4 text-sm text-orange">{status}</p> : null}
-        {section === "site" ? <SiteFields content={content} setContent={setContent} /> : null}
-        {section === "menu" ? <MenuFields content={content} setContent={setContent} /> : null}
-        {section === "home" ? <HomeFields content={content} setContent={setContent} /> : null}
-        {section === "about" ? <AboutFields content={content} setContent={setContent} /> : null}
-        {section === "products" ? <ProductFields content={content} setContent={setContent} /> : null}
-        {section === "portfolio" ? <PortfolioFields content={content} setContent={setContent} /> : null}
-        {section === "blog" ? <BlogFields content={content} setContent={setContent} /> : null}
-        {section === "contact" ? <ContactFields content={content} setContent={setContent} /> : null}
-        {section === "images" ? <ImageFields content={content} setContent={setContent} /> : null}
       </div>
-    </div>
+    </LangContext.Provider>
   );
 }
 
@@ -162,11 +187,14 @@ function Pair({
   onId: (value: string) => void;
   multiline?: boolean;
 }) {
+  const { lang } = useLang();
   return (
-    <div className="grid gap-3 md:grid-cols-2">
-      <Field label={`${label} (EN)`} value={en} onChange={onEn} multiline={multiline} />
-      <Field label={`${label} (ID)`} value={id} onChange={onId} multiline={multiline} />
-    </div>
+    <Field
+      label={label}
+      value={lang === "id" ? id : en}
+      onChange={lang === "id" ? onId : onEn}
+      multiline={multiline}
+    />
   );
 }
 
@@ -180,10 +208,13 @@ function ImagePicker({
   onChange: (value: string) => void;
 }) {
   const [busy, setBusy] = useState(false);
+  const [fileName, setFileName] = useState("");
+  const inputId = useId();
 
   async function onFile(file?: File) {
     if (!file) return;
     setBusy(true);
+    setFileName(file.name);
     const body = new FormData();
     body.append("file", file);
     const response = await fetch("/api/admin/upload", { method: "POST", body });
@@ -196,17 +227,44 @@ function ImagePicker({
   return (
     <div className="space-y-2">
       <span className="text-xs font-medium text-white/60">{label}</span>
-      {value ? (
-        <img src={value} alt="" className="h-28 w-full rounded-md object-cover bg-white/5" />
-      ) : null}
-      <input value={value} onChange={(event) => onChange(event.target.value)} className={inputClass} />
-      <input
-        type="file"
-        accept="image/*"
-        disabled={busy}
-        onChange={(event) => onFile(event.target.files?.[0])}
-        className="block text-xs text-white/70"
-      />
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
+        <div className="relative h-40 bg-black/30">
+          {value ? (
+            <img src={value} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full items-center justify-center text-sm text-white/40">No image yet</div>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-3 p-3">
+          <label
+            htmlFor={inputId}
+            className={`inline-flex cursor-pointer items-center gap-2 rounded-lg bg-orange px-4 py-2.5 text-sm font-semibold text-white ${
+              busy ? "opacity-70" : "hover:bg-orange-dark"
+            }`}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+              <path d="M12 16V4" />
+              <path d="M8 8l4-4 4 4" />
+              <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+            </svg>
+            {busy ? "Uploading…" : "Upload image"}
+          </label>
+          <input
+            id={inputId}
+            type="file"
+            accept="image/*"
+            disabled={busy}
+            className="sr-only"
+            onChange={(event) => onFile(event.target.files?.[0])}
+          />
+          <span className="text-xs text-white/50">{fileName || "JPG, PNG, or WebP · under 2.5 MB"}</span>
+        </div>
+        <input
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="w-full border-t border-white/10 bg-transparent px-3 py-2 text-xs text-white/70 outline-none"
+        />
+      </div>
     </div>
   );
 }
@@ -236,7 +294,7 @@ function SiteFields({
       <Field label="Email" value={site.email} onChange={(email) => setContent({ ...content, site: { ...site, email } })} />
       <div className="grid gap-3 md:grid-cols-2">
         {site.whatsappNumbers.map((number, index) => (
-          <div key={index} className="space-y-2 rounded-md border border-white/10 p-3">
+          <div key={index} className="space-y-2 rounded-xl border border-white/10 p-4">
             <Field
               label={`WhatsApp display ${index + 1}`}
               value={number.display}
@@ -284,10 +342,11 @@ function MenuFields({
   content: Content;
   setContent: (content: Content) => void;
 }) {
+  const { lang } = useLang();
   return (
     <div className="space-y-4">
       {content.navItems.map((item, index) => (
-        <div key={index} className="grid gap-3 rounded-md border border-white/10 p-3 md:grid-cols-[1fr_1fr_1fr_auto]">
+        <div key={index} className="grid gap-3 rounded-xl border border-white/10 p-4 md:grid-cols-[1fr_1fr_auto]">
           <Field
             label="Link"
             value={item.href}
@@ -299,28 +358,20 @@ function MenuFields({
             }
           />
           <Field
-            label="English"
-            value={item.en}
-            onChange={(en) =>
+            label="Menu label"
+            value={lang === "id" ? item.id : item.en}
+            onChange={(value) =>
               setContent({
                 ...content,
-                navItems: content.navItems.map((nav, i) => (i === index ? { ...nav, en } : nav)),
-              })
-            }
-          />
-          <Field
-            label="Indonesia"
-            value={item.id}
-            onChange={(id) =>
-              setContent({
-                ...content,
-                navItems: content.navItems.map((nav, i) => (i === index ? { ...nav, id } : nav)),
+                navItems: content.navItems.map((nav, i) =>
+                  i === index ? { ...nav, [lang]: value } : nav,
+                ),
               })
             }
           />
           <button
             type="button"
-            className="self-end rounded-md border border-white/15 px-3 py-2 text-sm"
+            className="self-end rounded-lg border border-white/15 px-3 py-2 text-sm"
             onClick={() => setContent({ ...content, navItems: content.navItems.filter((_, i) => i !== index) })}
           >
             Remove
@@ -391,7 +442,7 @@ function HomeFields({
       <Pair label="Products heading" en={en.products.title} id={id.products.title} onEn={(title) => setContent(updateCopy(content, "en", { products: { ...en.products, title } }))} onId={(title) => setContent(updateCopy(content, "id", { products: { ...id.products, title } }))} />
       <Pair label="Testimonials heading" en={en.testimonials.title} id={id.testimonials.title} onEn={(title) => setContent(updateCopy(content, "en", { testimonials: { ...en.testimonials, title } }))} onId={(title) => setContent(updateCopy(content, "id", { testimonials: { ...id.testimonials, title } }))} />
       {en.testimonials.items.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-md border border-white/10 p-3">
+        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
           <Pair
             label="Quote"
             en={item.quote}
@@ -479,12 +530,13 @@ function ProductFields({
   setContent: (content: Content) => void;
 }) {
   const [open, setOpen] = useState(content.products[0]?.slug ?? "");
+  const { lang } = useLang();
   return (
     <div className="space-y-4">
       {content.products.map((product, index) => (
-        <article key={product.slug} className="rounded-md border border-white/10 p-3">
+        <article key={product.slug} className="rounded-xl border border-white/10 p-4">
           <button type="button" className="w-full text-left font-medium" onClick={() => setOpen(open === product.slug ? "" : product.slug)}>
-            {product.en.name}
+            {product[lang].name}
           </button>
           {open === product.slug ? (
             <div className="mt-4 space-y-3">
@@ -614,7 +666,7 @@ function PortfolioFields({
       <Pair label="Kicker" en={en.portfolio.kicker} id={id.portfolio.kicker} onEn={(kicker) => setContent(updateCopy(content, "en", { portfolio: { ...en.portfolio, kicker } }))} onId={(kicker) => setContent(updateCopy(content, "id", { portfolio: { ...id.portfolio, kicker } }))} />
       <Pair label="Title" en={en.portfolio.title} id={id.portfolio.title} onEn={(title) => setContent(updateCopy(content, "en", { portfolio: { ...en.portfolio, title } }))} onId={(title) => setContent(updateCopy(content, "id", { portfolio: { ...id.portfolio, title } }))} />
       {en.portfolio.items.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-md border border-white/10 p-3">
+        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
           <Pair
             label="Card title"
             en={item.title}
@@ -651,7 +703,7 @@ function PortfolioFields({
       ))}
       <h2 className="text-sm font-semibold">Portfolio gallery</h2>
       {content.portfolioGallery.map((item, index) => (
-        <div key={index} className="space-y-3 rounded-md border border-white/10 p-3">
+        <div key={index} className="space-y-3 rounded-xl border border-white/10 p-4">
           <Pair
             label="Caption"
             en={item.titleEn}
@@ -726,6 +778,7 @@ function BlogFields({
   setContent: (content: Content) => void;
 }) {
   const [open, setOpen] = useState(content.posts[0]?.slug ?? "");
+  const { lang } = useLang();
   return (
     <div className="space-y-4">
       <Pair
@@ -736,9 +789,9 @@ function BlogFields({
         onId={(title) => setContent(updateCopy(content, "id", { blog: { ...content.dictionary.id.blog, title } }))}
       />
       {content.posts.map((post, index) => (
-        <article key={post.slug} className="rounded-md border border-white/10 p-3">
+        <article key={post.slug} className="rounded-xl border border-white/10 p-4">
           <button type="button" className="w-full text-left font-medium" onClick={() => setOpen(open === post.slug ? "" : post.slug)}>
-            {post.en.title}
+            {post[lang].title}
           </button>
           {open === post.slug ? (
             <div className="mt-4 space-y-3">
