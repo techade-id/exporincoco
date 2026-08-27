@@ -178,7 +178,12 @@ export async function saveContent(next: Content) {
   await writeJsonFile(RUNTIME_FILE, content).catch(() => undefined);
   await writeJsonFile(CONTENT_FILE, content).catch(() => undefined);
   if (blobEnabled()) {
-    await writeBlobJson(content);
+    try {
+      await writeBlobJson(content);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "unknown error";
+      throw new Error(`Could not save to Vercel Blob (${detail}). Use a private Blob store token.`);
+    }
     const verified = await readBlobJson<Partial<Content>>();
     if (!verified) {
       throw new Error("Saved to Blob, but the public site could not read it back. Check BLOB_READ_WRITE_TOKEN.");

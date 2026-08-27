@@ -99,7 +99,7 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
             <p>
               Storage:{" "}
               {persist === "blob"
-                ? "Vercel Blob (uploads stay live)"
+                ? "Vercel Blob (private store)"
                 : persist === "github"
                   ? "GitHub (keeps edits live)"
                   : "this server only"}
