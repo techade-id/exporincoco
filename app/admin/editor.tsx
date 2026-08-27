@@ -149,6 +149,38 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
   );
 }
 
+function CollapseButton({
+  open,
+  label,
+  onClick,
+}: {
+  open: boolean;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={open}
+      className="flex w-full items-center justify-between gap-3 text-left"
+    >
+      <span className="font-medium">{label}</span>
+      <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`h-4 w-4 transition ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </span>
+    </button>
+  );
+}
+
 function Field({
   label,
   value,
@@ -529,15 +561,17 @@ function ProductFields({
   content: Content;
   setContent: (content: Content) => void;
 }) {
-  const [open, setOpen] = useState(content.products[0]?.slug ?? "");
+  const [open, setOpen] = useState("");
   const { lang } = useLang();
   return (
     <div className="space-y-4">
       {content.products.map((product, index) => (
         <article key={product.slug} className="rounded-xl border border-white/10 p-4">
-          <button type="button" className="w-full text-left font-medium" onClick={() => setOpen(open === product.slug ? "" : product.slug)}>
-            {product[lang].name}
-          </button>
+          <CollapseButton
+            open={open === product.slug}
+            label={product[lang].name}
+            onClick={() => setOpen(open === product.slug ? "" : product.slug)}
+          />
           {open === product.slug ? (
             <div className="mt-4 space-y-3">
               <Field
@@ -777,7 +811,7 @@ function BlogFields({
   content: Content;
   setContent: (content: Content) => void;
 }) {
-  const [open, setOpen] = useState(content.posts[0]?.slug ?? "");
+  const [open, setOpen] = useState("");
   const { lang } = useLang();
   return (
     <div className="space-y-4">
@@ -790,9 +824,11 @@ function BlogFields({
       />
       {content.posts.map((post, index) => (
         <article key={post.slug} className="rounded-xl border border-white/10 p-4">
-          <button type="button" className="w-full text-left font-medium" onClick={() => setOpen(open === post.slug ? "" : post.slug)}>
-            {post[lang].title}
-          </button>
+          <CollapseButton
+            open={open === post.slug}
+            label={post[lang].title}
+            onClick={() => setOpen(open === post.slug ? "" : post.slug)}
+          />
           {open === post.slug ? (
             <div className="mt-4 space-y-3">
               <Field
