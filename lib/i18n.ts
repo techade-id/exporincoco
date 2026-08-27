@@ -135,7 +135,7 @@ export const dictionary = {
       submit: "Send Inquiry",
       sending: "Sending…",
       success:
-        "Thank you. Your inquiry is ready. You can also send it directly via WhatsApp so our sales team can reply faster.",
+        "Thank you. WhatsApp should open with your inquiry. If it does not, tap a number below to send it to our sales team.",
       error: "Please complete the required fields.",
       openWhatsApp: "Continue on WhatsApp",
       mapTitle: "Office location",
@@ -285,7 +285,7 @@ export const dictionary = {
       submit: "Kirim Inquiry",
       sending: "Mengirim…",
       success:
-        "Terima kasih. Inquiry Anda siap. Anda juga dapat mengirimnya langsung via WhatsApp agar tim sales kami merespons lebih cepat.",
+        "Terima kasih. WhatsApp seharusnya terbuka dengan inquiry Anda. Jika tidak, ketuk nomor di bawah untuk mengirim ke tim sales.",
       error: "Lengkapi kolom yang wajib diisi.",
       openWhatsApp: "Lanjut di WhatsApp",
       mapTitle: "Lokasi kantor",

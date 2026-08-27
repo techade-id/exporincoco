@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
-import { inquiryCountries, localizedPath, type Locale, whatsappUrl } from "@/lib/site";
+import { inquiryCountries, whatsappLinks, type Locale } from "@/lib/site";
 import { t } from "@/lib/i18n";
 import { products } from "@/lib/products";
 
@@ -11,10 +11,16 @@ type InquiryFormProps = {
   defaultProduct?: string;
 };
 
+type WhatsAppLink = {
+  display: string;
+  wa: string;
+  href: string;
+};
+
 export function InquiryForm({ locale, compact = false, defaultProduct = "" }: InquiryFormProps) {
   const copy = t(locale);
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
-  const [waLink, setWaLink] = useState("");
+  const [waLinks, setWaLinks] = useState<WhatsAppLink[]>([]);
 
   const productOptions = useMemo(
     () =>
@@ -24,6 +30,28 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
       })),
     [locale],
   );
+
+  function inquiryText(payload: {
+    name: string;
+    company: string;
+    country: string;
+    email: string;
+    phone: string;
+    product: string;
+    message: string;
+  }) {
+    return [
+      copy.wa.defaultMessage,
+      "",
+      `Name: ${payload.name}`,
+      `Company: ${payload.company || "-"}`,
+      `Country: ${payload.country || "-"}`,
+      `Email: ${payload.email}`,
+      `Phone: ${payload.phone || "-"}`,
+      `Product: ${payload.product || "-"}`,
+      `Message: ${payload.message}`,
+    ].join("\n");
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,22 +83,26 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
     }
 
     setStatus("sending");
+    const fallbackLinks = whatsappLinks(inquiryText(payload));
     try {
       const response = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = (await response.json()) as { whatsappUrl?: string };
-      setWaLink(json.whatsappUrl || whatsappUrl(payload.message));
+      const json = (await response.json()) as { whatsappUrls?: WhatsAppLink[] };
+      const links = json.whatsappUrls?.length ? json.whatsappUrls : fallbackLinks;
+      setWaLinks(links);
+      if (links[0]) {
+        window.open(links[0].href, "_blank", "noopener,noreferrer");
+      }
       setStatus("ok");
       form.reset();
     } catch {
-      setWaLink(
-        whatsappUrl(
-          `${copy.wa.defaultMessage}\n\nName: ${payload.name}\nCompany: ${payload.company}\nCountry: ${payload.country}\nEmail: ${payload.email}\nProduct: ${payload.product}\n${payload.message}`,
-        ),
-      );
+      setWaLinks(fallbackLinks);
+      if (fallbackLinks[0]) {
+        window.open(fallbackLinks[0].href, "_blank", "noopener,noreferrer");
+      }
       setStatus("ok");
     }
   }
@@ -134,15 +166,19 @@ export function InquiryForm({ locale, compact = false, defaultProduct = "" }: In
       {status === "ok" ? (
         <div className="space-y-2 text-xs text-white/85">
           <p>{copy.contact.success}</p>
-          {waLink ? (
-            <a href={waLink} target="_blank" rel="noreferrer" className="font-semibold text-orange">
-              {copy.contact.openWhatsApp}
-            </a>
-          ) : (
-            <a href={localizedPath(locale, "/contact")} className="font-semibold text-orange">
-              {copy.nav.contact}
-            </a>
-          )}
+          <div className="flex flex-col gap-1">
+            {waLinks.map((link) => (
+              <a
+                key={link.wa}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-orange"
+              >
+                {copy.contact.openWhatsApp} · {link.display}
+              </a>
+            ))}
+          </div>
         </div>
       ) : null}
     </form>

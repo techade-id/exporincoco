@@ -18,13 +18,13 @@ Open [http://localhost:3000](http://localhost:3000). The home page redirects to 
 1. Push this folder to a GitHub repository.
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repo.
 3. Framework preset: **Next.js**. Leave the build command as `next build`.
-4. Add optional environment variables if you want inquiry emails:
+4. Optional environment variables for inquiry email:
    - `RESEND_API_KEY`
    - `INQUIRY_FROM`
    - `INQUIRY_TO` (defaults to `eksporinaja@gmail.com`)
 5. Deploy. Vercel will give you a `*.vercel.app` URL.
 
-Without Resend, the inquiry form still works: it validates the fields and prepares a WhatsApp message to **0823-2226-0278**.
+The inquiry form opens WhatsApp with the buyer’s message (0823-2226-0278 and 0858-7639-9054). It also emails `eksporinaja@gmail.com` via FormSubmit — check that inbox once and confirm the activation email so later inquiries arrive automatically.
 
 ## Pages
 

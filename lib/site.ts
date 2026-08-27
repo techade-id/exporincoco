@@ -65,7 +65,14 @@ export function localizedPath(locale: Locale, path = "/") {
   return `/${locale}${clean === "/" ? "" : clean}`;
 }
 
-export function whatsappUrl(message?: string) {
-  const base = `https://wa.me/${site.whatsapp}`;
+export function whatsappUrl(message?: string, wa = site.whatsapp) {
+  const base = `https://wa.me/${wa}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+export function whatsappLinks(message?: string) {
+  return site.whatsappNumbers.map((number) => ({
+    ...number,
+    href: whatsappUrl(message, number.wa),
+  }));
 }

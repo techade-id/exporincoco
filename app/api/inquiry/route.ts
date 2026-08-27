@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { site, whatsappUrl } from "@/lib/site";
+import { site, whatsappLinks } from "@/lib/site";
 
 type InquiryBody = {
   name?: string;
@@ -33,25 +33,46 @@ export async function POST(request: Request) {
     `Message: ${message}`,
   ].join("\n");
 
-  const key = process.env.RESEND_API_KEY;
-  if (key) {
+  const subject = `Inquiry from ${name}${body.product ? ` — ${body.product}` : ""}`;
+  const to = process.env.INQUIRY_TO || site.email;
+
+  const resendKey = process.env.RESEND_API_KEY;
+  if (resendKey) {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${key}`,
+        Authorization: `Bearer ${resendKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: process.env.INQUIRY_FROM || "Eksporin Coco <onboarding@resend.dev>",
-        to: [process.env.INQUIRY_TO || site.email],
-        subject: `Inquiry from ${name}${body.product ? ` — ${body.product}` : ""}`,
+        to: [to],
+        subject,
         text,
       }),
-    });
+    }).catch(() => undefined);
+  } else {
+    await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        company: body.company || "-",
+        country: body.country || "-",
+        phone: body.phone || "-",
+        product: body.product || "-",
+        message: text,
+        _subject: subject,
+      }),
+    }).catch(() => undefined);
   }
 
   return NextResponse.json({
     ok: true,
-    whatsappUrl: whatsappUrl(text),
+    whatsappUrls: whatsappLinks(text),
   });
 }
