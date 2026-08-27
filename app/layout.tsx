@@ -11,7 +11,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://eksporincoco.vercel.app"),
+  metadataBase: new URL("https://eksporincoco.com"),
   title: {
     default: `${site.name} | Indonesian Coconut Charcoal Exporter`,
     template: `%s | ${site.name}`,
@@ -28,10 +28,10 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: [
-      { url: "/images/logo.png", type: "image/png" },
-      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", type: "image/x-icon" },
     ],
-    apple: [{ url: "/images/logo.png" }],
+    apple: [{ url: "/apple-icon.png" }],
   },
   openGraph: {
     title: `${site.name} | Indonesian Coconut Charcoal Exporter`,
