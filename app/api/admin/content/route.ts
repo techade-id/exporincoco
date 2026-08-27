@@ -18,10 +18,15 @@ export async function PUT(request: Request) {
   if (!body.content) {
     return NextResponse.json({ error: "Missing content" }, { status: 400 });
   }
-  const content = await saveContent(body.content);
-  revalidatePath("/", "layout");
-  revalidatePath("/[locale]", "layout");
-  revalidatePath("/en", "layout");
-  revalidatePath("/id", "layout");
-  return NextResponse.json({ content, persist: persistMode() });
+  try {
+    const content = await saveContent(body.content);
+    revalidatePath("/", "layout");
+    revalidatePath("/[locale]", "layout");
+    revalidatePath("/en", "layout");
+    revalidatePath("/id", "layout");
+    return NextResponse.json({ content, persist: persistMode() });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Could not save content.";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

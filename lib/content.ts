@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 import { connection } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
@@ -156,6 +157,7 @@ export function persistMode() {
 }
 
 export const getContent = cache(async function getContent(): Promise<Content> {
+  noStore();
   await connection();
   if (blobEnabled()) {
     const remote = await readBlobJson<Partial<Content>>();
@@ -177,7 +179,11 @@ export async function saveContent(next: Content) {
   await writeJsonFile(CONTENT_FILE, content).catch(() => undefined);
   if (blobEnabled()) {
     await writeBlobJson(content);
-    return content;
+    const verified = await readBlobJson<Partial<Content>>();
+    if (!verified) {
+      throw new Error("Saved to Blob, but the public site could not read it back. Check BLOB_READ_WRITE_TOKEN.");
+    }
+    return mergeContent(verified);
   }
   if (githubConfig()) {
     const ok = await githubPutFile(

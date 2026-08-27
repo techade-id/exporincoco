@@ -56,12 +56,19 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
       body: JSON.stringify({ content }),
     });
     setSaving(false);
-    if (!response.ok) {
-      const json = (await response.json()) as { error?: string };
+    let json: { error?: string; content?: Content } = {};
+    try {
+      json = (await response.json()) as { error?: string; content?: Content };
+    } catch {
+      setStatus("Could not save. The server did not return a valid response.");
+      return;
+    }
+    if (!response.ok || !json.content) {
       setStatus(json.error || "Could not save.");
       return;
     }
-    setStatus("Saved. Refresh the public site (or open View site) to see it.");
+    setContent(json.content);
+    setStatus(`Saved. English hero is now: “${json.content.dictionary.en.hero.title}”`);
   }
 
   async function logout() {
@@ -138,7 +145,9 @@ export function Editor({ initial, persist }: { initial: Content; persist: "file"
               </button>
             </div>
           </div>
-          {status ? <p className="mb-4 text-sm text-orange">{status}</p> : null}
+          {status ? (
+            <p className={`mb-4 text-sm ${status.startsWith("Saved") ? "text-orange" : "text-red-400"}`}>{status}</p>
+          ) : null}
           {section === "site" ? <SiteFields content={content} setContent={setContent} /> : null}
           {section === "menu" ? <MenuFields content={content} setContent={setContent} /> : null}
           {section === "home" ? <HomeFields content={content} setContent={setContent} /> : null}

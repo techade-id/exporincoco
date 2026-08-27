@@ -13,6 +13,9 @@ import {
 import { getContent } from "@/lib/content";
 import { isLocale, localizedPath, type Locale } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function generateMetadata({
   params,
 }: {
