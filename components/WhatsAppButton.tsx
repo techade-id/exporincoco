@@ -1,18 +1,59 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { IconWhatsApp } from "@/components/icons";
 import { t } from "@/lib/i18n";
-import { type Locale, whatsappUrl } from "@/lib/site";
+import { type Locale, whatsappLinks } from "@/lib/site";
 
 export function WhatsAppButton({ locale }: { locale: Locale }) {
   const copy = t(locale);
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const links = whatsappLinks(copy.wa.defaultMessage);
+
+  useEffect(() => {
+    function onPointerDown(event: PointerEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
+
   return (
-    <a
-      href={whatsappUrl(copy.wa.defaultMessage)}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={copy.wa.label}
-      className="no-print fixed right-4 bottom-4 z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
-    >
-      <IconWhatsApp className="block h-8 w-8 shrink-0" />
-    </a>
+    <div ref={rootRef} className="no-print fixed right-4 bottom-4 z-50 flex flex-col items-end">
+      {open ? (
+        <div className="mb-3 w-56 overflow-hidden rounded-2xl bg-white text-neutral-900 shadow-xl ring-1 ring-black/10 dark:bg-card dark:text-ink dark:ring-white/10">
+          <p className="border-b border-line px-4 py-2 text-xs font-medium text-muted">
+            {copy.wa.choose}
+          </p>
+          <div className="flex flex-col">
+            {links.map((link) => (
+              <a
+                key={link.wa}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium transition hover:bg-surface"
+              >
+                <IconWhatsApp className="h-5 w-5 shrink-0 text-[#25D366]" />
+                {link.display}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      <button
+        type="button"
+        aria-label={copy.wa.label}
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+        className="ml-auto flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+      >
+        <IconWhatsApp className="block h-8 w-8 shrink-0" />
+      </button>
+    </div>
   );
 }

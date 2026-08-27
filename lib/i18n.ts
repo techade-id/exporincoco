@@ -145,6 +145,7 @@ export const dictionary = {
     },
     wa: {
       label: "Chat on WhatsApp",
+      choose: "Choose a WhatsApp number",
       defaultMessage:
         "Hello Eksporin Coco, I would like to inquire about coconut charcoal briquettes and coconut-based products.",
     },
@@ -295,6 +296,7 @@ export const dictionary = {
     },
     wa: {
       label: "Chat WhatsApp",
+      choose: "Pilih nomor WhatsApp",
       defaultMessage:
         "Halo Eksporin Coco, saya ingin menanyakan briket arang kelapa dan produk berbasis kelapa.",
     },
