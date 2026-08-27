@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     "Eksporin Coco",
     "PT Ekspor Indonesia Aja",
   ],
+  icons: {
+    icon: [{ url: "/favicon.ico" }, { url: "/icon.png" }],
+    apple: [{ url: "/apple-icon.png" }],
+  },
   openGraph: {
     title: `${site.name} | Indonesian Coconut Charcoal Exporter`,
     description:
