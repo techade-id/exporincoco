@@ -45,10 +45,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${plusJakarta.variable} dark h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem("theme");var d=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d)document.documentElement.classList.add("dark");}catch(e){}})();`}
+          {`(function(){try{var t=localStorage.getItem("theme");if(t==="light")document.documentElement.classList.remove("dark");else document.documentElement.classList.add("dark");}catch(e){document.documentElement.classList.add("dark");}})();`}
         </Script>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
