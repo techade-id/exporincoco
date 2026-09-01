@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useId, useState, type ReactNode } from "react";
-import { slugify, type Content, type GalleryItem, type PostItem, type ProductItem } from "@/lib/content-types";
+import { productImages, slugify, type Content, type GalleryItem, type PostItem, type ProductItem } from "@/lib/content-types";
 
 type EditorLang = "en" | "id";
 
@@ -636,6 +636,7 @@ function emptyProduct(): ProductItem {
   return {
     slug: `product-${Date.now()}`,
     image: "/images/briquettes.jpg",
+    images: ["/images/briquettes.jpg"],
     specs: [{ label: "Origin", value: "Indonesia" }],
     en: { name: "New product", short: "", description: "" },
     id: { name: "Produk baru", short: "", description: "" },
@@ -694,11 +695,32 @@ function ProductFields({
                 onEn={(description) => setContent({ ...content, products: content.products.map((item, i) => (i === index ? { ...item, en: { ...item.en, description } } : item)) })}
                 onId={(description) => setContent({ ...content, products: content.products.map((item, i) => (i === index ? { ...item, id: { ...item.id, description } } : item)) })}
               />
-              <ImagePicker
-                label="Product image"
-                value={product.image}
-                onChange={(image) => setContent({ ...content, products: content.products.map((item, i) => (i === index ? { ...item, image } : item)) })}
-              />
+              <div className="space-y-3">
+                <span className="text-xs font-medium text-white/60">Product images</span>
+                {productImages(product).map((image, imageIndex) => (
+                  <div key={`${image}-${imageIndex}`} className="relative">
+                    <ImagePicker
+                      label={`Image ${imageIndex + 1}`}
+                      value={image}
+                      onChange={(nextImage) => setContent({ ...content, products: content.products.map((item, i) => {
+                        if (i !== index) return item;
+                        const images = productImages(item).map((itemImage, j) => (j === imageIndex ? nextImage : itemImage));
+                        return { ...item, image: images[0] || nextImage, images };
+                      }) })}
+                    />
+                    {productImages(product).length > 1 ? (
+                      <button type="button" className="mt-2 rounded-md border border-white/15 px-3 py-2 text-sm" onClick={() => setContent({ ...content, products: content.products.map((item, i) => {
+                        if (i !== index) return item;
+                        const images = productImages(item).filter((_, j) => j !== imageIndex);
+                        return { ...item, image: images[0] || "", images };
+                      }) })}>Remove image</button>
+                    ) : null}
+                  </div>
+                ))}
+                <button type="button" className="rounded-md border border-white/15 px-3 py-2 text-sm" onClick={() => setContent({ ...content, products: content.products.map((item, i) => i === index ? { ...item, images: [...productImages(item), ""] } : item) })}>
+                  Add image
+                </button>
+              </div>
               {product.specs.map((spec, specIndex) => (
                 <div key={specIndex} className="grid gap-3 md:grid-cols-2">
                   <Field

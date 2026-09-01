@@ -75,10 +75,15 @@ export type SiteInfo = {
 export type ProductItem = {
   slug: string;
   image: string;
+  images?: string[];
   specs: { label: string; value: string }[];
   en: { name: string; short: string; description: string };
   id: { name: string; short: string; description: string };
 };
+
+export function productImages(product: ProductItem) {
+  return product.images?.length ? product.images : [product.image];
+}
 
 export type PostItem = {
   slug: string;

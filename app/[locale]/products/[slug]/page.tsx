@@ -6,6 +6,7 @@ import { MediaImage } from "@/components/MediaImage";
 import { IconPdf } from "@/components/icons";
 import { getContent } from "@/lib/content";
 import { isLocale, localizedPath, type Locale } from "@/lib/site";
+import { productImages } from "@/lib/content-types";
 
 export const dynamicParams = true;
 
@@ -61,6 +62,15 @@ export default async function ProductPage({
           <p className="mt-3 rounded-md bg-band px-4 py-2 text-center text-sm font-medium text-white">
             {product[locale].name}
           </p>
+          {productImages(product).length > 1 ? (
+            <div className="mt-3 grid grid-cols-3 gap-3">
+              {productImages(product).slice(1).map((image, index) => (
+                <div key={`${image}-${index}`} className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                  <MediaImage src={image} alt={`${product[locale].name} ${index + 2}`} fill className="object-cover" sizes="160px" />
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
         <div>
           <p className="text-muted leading-7">{product[locale].description}</p>
