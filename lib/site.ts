@@ -31,12 +31,15 @@ export const site = {
 } as const;
 
 export const markets = [
-  { code: "IN", name: "India", nameId: "India", flag: "🇮🇳" },
-  { code: "VN", name: "Vietnam", nameId: "Vietnam", flag: "🇻🇳" },
-  { code: "KR", name: "South Korea", nameId: "Korea Selatan", flag: "🇰🇷" },
-  { code: "TH", name: "Thailand", nameId: "Thailand", flag: "🇹🇭" },
-  { code: "CA", name: "Canada", nameId: "Kanada", flag: "🇨🇦" },
-  { code: "SG", name: "Singapore", nameId: "Singapura", flag: "🇸🇬" },
+  { code: "AE", name: "UAE", nameId: "UEA", flag: "🇦🇪" },
+  { code: "SA", name: "Saudi Arabia", nameId: "Arab Saudi", flag: "🇸🇦" },
+  { code: "QA", name: "Qatar", nameId: "Qatar", flag: "🇶🇦" },
+  { code: "KW", name: "Kuwait", nameId: "Kuwait", flag: "🇰🇼" },
+  { code: "TR", name: "Turkey", nameId: "Turki", flag: "🇹🇷" },
+  { code: "LB", name: "Lebanon", nameId: "Lebanon", flag: "🇱🇧" },
+  { code: "DE", name: "Germany", nameId: "Jerman", flag: "🇩🇪" },
+  { code: "NL", name: "Netherlands", nameId: "Belanda", flag: "🇳🇱" },
+  { code: "GB", name: "United Kingdom", nameId: "Britania Raya", flag: "🇬🇧" },
 ] as const;
 
 export const inquiryCountries = [

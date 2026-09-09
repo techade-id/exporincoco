@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useId, useState, type ReactNode } from "react";
-import { productImages, slugify, type Content, type GalleryItem, type PostItem, type ProductItem } from "@/lib/content-types";
+import { productImages, slugify, type Content, type GalleryItem, type MarketItem, type PostItem, type ProductItem } from "@/lib/content-types";
 
 type EditorLang = "en" | "id";
 
@@ -518,6 +518,18 @@ function HomeFields({
       ))}
       <Pair label="About teaser" en={en.about.p1} id={id.about.p1} multiline onEn={(p1) => setContent(updateCopy(content, "en", { about: { ...en.about, p1 } }))} onId={(p1) => setContent(updateCopy(content, "id", { about: { ...id.about, p1 } }))} />
       <Pair label="Products heading" en={en.products.title} id={id.products.title} onEn={(title) => setContent(updateCopy(content, "en", { products: { ...en.products, title } }))} onId={(title) => setContent(updateCopy(content, "id", { products: { ...id.products, title } }))} />
+      <Pair label="Markets heading" en={en.markets.title} id={id.markets.title} onEn={(title) => setContent(updateCopy(content, "en", { markets: { ...en.markets, title } }))} onId={(title) => setContent(updateCopy(content, "id", { markets: { ...id.markets, title } }))} />
+      <h2 className="text-sm font-semibold">Trusted buyer countries</h2>
+      {content.markets.map((market, index) => (
+        <div key={`${market.code}-${index}`} className="grid gap-3 rounded-xl border border-white/10 p-4 md:grid-cols-5">
+          <Field label="Code" value={market.code} onChange={(code) => setContent({ ...content, markets: content.markets.map((item, i) => i === index ? { ...item, code } : item) })} />
+          <Field label="Flag" value={market.flag} onChange={(flag) => setContent({ ...content, markets: content.markets.map((item, i) => i === index ? { ...item, flag } : item) })} />
+          <Field label="English" value={market.name} onChange={(name) => setContent({ ...content, markets: content.markets.map((item, i) => i === index ? { ...item, name } : item) })} />
+          <Field label="Indonesia" value={market.nameId} onChange={(nameId) => setContent({ ...content, markets: content.markets.map((item, i) => i === index ? { ...item, nameId } : item) })} />
+          <button type="button" className="self-end rounded-md border border-white/15 px-3 py-2 text-sm" onClick={() => setContent({ ...content, markets: content.markets.filter((_, i) => i !== index) })}>Remove</button>
+        </div>
+      ))}
+      <button type="button" className="rounded-md border border-white/15 px-3 py-2 text-sm" onClick={() => setContent({ ...content, markets: [...content.markets, { code: "XX", name: "New country", nameId: "Negara baru", flag: "🌍" } as MarketItem] })}>Add country</button>
       <Pair label="Testimonials heading" en={en.testimonials.title} id={id.testimonials.title} onEn={(title) => setContent(updateCopy(content, "en", { testimonials: { ...en.testimonials, title } }))} onId={(title) => setContent(updateCopy(content, "id", { testimonials: { ...id.testimonials, title } }))} />
       {en.testimonials.items.map((item, index) => (
         <CollapseItem
