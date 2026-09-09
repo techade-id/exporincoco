@@ -65,6 +65,10 @@ export function defaultContent(): Content {
 function mergeContent(stored: Partial<Content> | null): Content {
   const base = defaultContent();
   if (!stored) return base;
+  const legacyMarketCodes = ["IN", "VN", "KR", "TH", "CA", "SG"];
+  const hasLegacyMarkets =
+    stored.markets?.length === legacyMarketCodes.length &&
+    stored.markets.every((market, index) => market.code === legacyMarketCodes[index]);
   return {
     ...base,
     ...stored,
@@ -77,7 +81,7 @@ function mergeContent(stored: Partial<Content> | null): Content {
     navItems: stored.navItems?.length ? stored.navItems : base.navItems,
     products: stored.products?.length ? stored.products : base.products,
     posts: stored.posts ?? base.posts,
-    markets: stored.markets?.length ? stored.markets : base.markets,
+    markets: stored.markets?.length && !hasLegacyMarkets ? stored.markets : base.markets,
     inquiryCountries: stored.inquiryCountries?.length ? stored.inquiryCountries : base.inquiryCountries,
     portfolioPreviewImages: stored.portfolioPreviewImages?.length ? stored.portfolioPreviewImages : base.portfolioPreviewImages,
     portfolioGallery: stored.portfolioGallery?.length ? stored.portfolioGallery : base.portfolioGallery,
