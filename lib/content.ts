@@ -160,16 +160,43 @@ export function persistMode() {
   return "file" as const;
 }
 
+const REMOTE_CACHE_TTL_MS = 60_000;
+
+let remoteCache: { content: Content; expiresAt: number } | null = null;
+
+function readRemoteCache(): Content | null {
+  if (!remoteCache) return null;
+  if (Date.now() >= remoteCache.expiresAt) {
+    remoteCache = null;
+    return null;
+  }
+  return remoteCache.content;
+}
+
+function primeRemoteCache(content: Content): Content {
+  remoteCache = { content, expiresAt: Date.now() + REMOTE_CACHE_TTL_MS };
+  return content;
+}
+
+export function clearContentCache() {
+  remoteCache = null;
+}
+
 export const getContent = cache(async function getContent(): Promise<Content> {
   noStore();
   await connection();
+  const remoteEnabled = blobEnabled() || Boolean(githubConfig());
+  if (remoteEnabled) {
+    const cached = readRemoteCache();
+    if (cached) return cached;
+  }
   if (blobEnabled()) {
     const remote = await readBlobJson<Partial<Content>>();
-    if (remote) return mergeContent(remote);
+    if (remote) return primeRemoteCache(mergeContent(remote));
   }
   if (githubConfig()) {
     const remote = await githubGetFile("data/content.json");
-    if (remote) return mergeContent(JSON.parse(remote.text) as Partial<Content>);
+    if (remote) return primeRemoteCache(mergeContent(JSON.parse(remote.text) as Partial<Content>));
   }
   const runtime = await readJsonFile(RUNTIME_FILE);
   if (runtime) return mergeContent(runtime);
@@ -179,6 +206,7 @@ export const getContent = cache(async function getContent(): Promise<Content> {
 
 export async function saveContent(next: Content) {
   const content = mergeContent(next);
+  clearContentCache();
   await writeJsonFile(RUNTIME_FILE, content).catch(() => undefined);
   await writeJsonFile(CONTENT_FILE, content).catch(() => undefined);
   if (blobEnabled()) {
@@ -188,11 +216,7 @@ export async function saveContent(next: Content) {
       const detail = error instanceof Error ? error.message : "unknown error";
       throw new Error(`Could not save to Vercel Blob (${detail}). Use a private Blob store token.`);
     }
-    const verified = await readBlobJson<Partial<Content>>();
-    if (!verified) {
-      throw new Error("Saved to Blob, but the public site could not read it back. Check BLOB_READ_WRITE_TOKEN.");
-    }
-    return mergeContent(verified);
+    return primeRemoteCache(content);
   }
   if (githubConfig()) {
     const ok = await githubPutFile(
@@ -201,6 +225,7 @@ export async function saveContent(next: Content) {
       "Update site content from editorial",
     );
     if (!ok) throw new Error("Could not save content to GitHub. Check GITHUB_TOKEN.");
+    return primeRemoteCache(content);
   }
   return content;
 }
