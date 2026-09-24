@@ -26,25 +26,6 @@ Open [http://localhost:3000](http://localhost:3000). The home page redirects to 
 
 The inquiry form opens WhatsApp with the buyer’s message (0823-2226-0278 and 0858-7639-9054). It also emails `eksporinaja@gmail.com` via FormSubmit — check that inbox once and confirm the activation email so later inquiries arrive automatically.
 
-## Content & image storage (Google Cloud Storage)
-
-Editorial content (`content.json`) and admin image uploads (`uploads/*`) are stored in a private GCS bucket and served through `/api/media/:name`, so the bucket never needs public access.
-
-1. In Google Cloud, keep the bucket `exporincoco` (uniform access, public access prevention is fine).
-2. Create a service account, and on the bucket's **Permissions** tab grant it **Storage Object User** (`roles/storage.objectUser`).
-3. Create a JSON key for the service account.
-4. In Vercel → Project → Settings → Environment Variables, add:
-   - `GCS_BUCKET` = `exporincoco`
-   - `GCS_PROJECT_ID` = your project ID
-   - `GCS_CREDENTIALS` = the key JSON (paste as-is, or base64-encode it)
-5. Remove `BLOB_READ_WRITE_TOKEN` and redeploy.
-
-To copy the existing files from Vercel Blob once:
-
-```bash
-BLOB_READ_WRITE_TOKEN=... GCS_BUCKET=exporincoco GCS_CREDENTIALS="$(base64 -w0 key.json)" npm run migrate:blob-to-gcs
-```
-
 ## Pages
 
 - `/en` and `/id` — home

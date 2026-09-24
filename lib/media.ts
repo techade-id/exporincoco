@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { gcsEnabled, putObject, readObjectBytes } from "@/lib/gcs-store";
+import { blobEnabled, putBlob, readBlobBytes } from "@/lib/blob-store";
 import { githubPutFile, persistMode } from "@/lib/content";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public", "uploads");
@@ -36,8 +36,8 @@ export async function saveUpload(file: File) {
   await writeLocal(path.join(DATA_DIR, filename), bytes).catch(() => undefined);
   await writeLocal(path.join(TMP_DIR, filename), bytes).catch(() => undefined);
 
-  if (gcsEnabled()) {
-    await putObject(`uploads/${filename}`, bytes, file.type || "image/jpeg");
+  if (blobEnabled()) {
+    await putBlob(`uploads/${filename}`, bytes, file.type || "image/jpeg");
     return `/uploads/${filename}`;
   }
 
@@ -58,8 +58,8 @@ export async function saveUpload(file: File) {
 
 export async function readUpload(filename: string) {
   const safe = path.basename(filename);
-  const fromBucket = await readObjectBytes(`uploads/${safe}`);
-  if (fromBucket) return fromBucket;
+  const fromBlob = await readBlobBytes(`uploads/${safe}`);
+  if (fromBlob) return fromBlob;
   const candidates = [
     path.join(PUBLIC_DIR, safe),
     path.join(DATA_DIR, safe),

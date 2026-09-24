@@ -7,7 +7,7 @@ import { posts as seedPosts } from "@/lib/blog";
 import { dictionary as seedDictionary } from "@/lib/i18n";
 import { products as seedProducts } from "@/lib/products";
 import { inquiryCountries as seedCountries, markets as seedMarkets, site as seedSite } from "@/lib/site";
-import { gcsEnabled, readObjectJson, writeObjectJson } from "@/lib/gcs-store";
+import { blobEnabled, readBlobJson, writeBlobJson } from "@/lib/blob-store";
 import type { Content, MarketItem, ProductItem, PostItem, SiteInfo } from "@/lib/content-types";
 
 export type {
@@ -155,7 +155,7 @@ async function writeJsonFile(filePath: string, content: Content) {
 }
 
 export function persistMode() {
-  if (gcsEnabled()) return "gcs" as const;
+  if (blobEnabled()) return "blob" as const;
   if (githubConfig()) return "github" as const;
   return "file" as const;
 }
@@ -185,13 +185,13 @@ export function clearContentCache() {
 export const getContent = cache(async function getContent(): Promise<Content> {
   noStore();
   await connection();
-  const remoteEnabled = gcsEnabled() || Boolean(githubConfig());
+  const remoteEnabled = blobEnabled() || Boolean(githubConfig());
   if (remoteEnabled) {
     const cached = readRemoteCache();
     if (cached) return cached;
   }
-  if (gcsEnabled()) {
-    const remote = await readObjectJson<Partial<Content>>();
+  if (blobEnabled()) {
+    const remote = await readBlobJson<Partial<Content>>();
     if (remote) return primeRemoteCache(mergeContent(remote));
   }
   if (githubConfig()) {
@@ -209,12 +209,12 @@ export async function saveContent(next: Content) {
   clearContentCache();
   await writeJsonFile(RUNTIME_FILE, content).catch(() => undefined);
   await writeJsonFile(CONTENT_FILE, content).catch(() => undefined);
-  if (gcsEnabled()) {
+  if (blobEnabled()) {
     try {
-      await writeObjectJson(content);
+      await writeBlobJson(content);
     } catch (error) {
       const detail = error instanceof Error ? error.message : "unknown error";
-      throw new Error(`Could not save to Google Cloud Storage (${detail}). Check GCS_BUCKET and GCS_CREDENTIALS.`);
+      throw new Error(`Could not save to Vercel Blob (${detail}). Use a private Blob store token.`);
     }
     return primeRemoteCache(content);
   }
